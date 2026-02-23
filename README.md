@@ -1,4 +1,4 @@
-#  Magdalor Tech - Chinese Auction System
+# 🎁 Magdalor Tech - Chinese Auction System
 ### פלטפורמה מתקדמת מקצה לקצה (Full-Stack) לניהול מערכות מכירה והגרלות
 
 ![Banner](https://img.shields.io/badge/.NET-8.0-blueviolet?style=for-the-badge&logo=dotnet)
@@ -9,33 +9,38 @@
 
 ---
 
-##  מבט אל המערכת (Visual Showcase)
+## 📸 מבט אל המערכת (Visual Showcase)
 
-**דף הבית והתחברות** | **נציגה וירטואלית מבוססת AI**
-:---:|:---:
-![Home Page](./screenshots/home.png) | ![AI Chatbot](./screenshots/chat.png)
-*ממשק כניסה מעוצב עם ספירה לאחור* | *אלישבע - עוזרת אישית המלווה את המשתמש*
+### 🌟 דף הבית והתחברות
+*ממשק כניסה מעוצב עם ספירה לאחור המכניס את המשתמש לאווירת המכירה.*
+![Home Page](./screenshots/home.png)
 
-**קטלוג פרסים יוקרתי** | **לוח בקרה למנהל (Analytics)**
-:---:|:---:
-![Catalog](./screenshots/catalog.png) | ![Dashboard](./screenshots/dashboard.png)
-*סינון ומיון מתקדם של פרסים* | *ניתוח הכנסות והתפלגויות בזמן אמת*
+### 🤖 נציגה וירטואלית מבוססת AI
+*אלישבע - העוזרת האישית החכמה שלנו, מלווה את המשתמש בכל שאלה.*
+![AI Chatbot](./screenshots/chat.png)
 
-**ניהול ועריכת תוכן (Admin Panel)**
-:---:
+### 🎁 קטלוג פרסים יוקרתי
+*תצוגת כרטיסים מודרנית עם אפשרויות סינון ומיון מתקדם של הפרסים.*
+![Catalog](./screenshots/catalog.png)
+
+### 📊 לוח בקרה למנהל (Analytics)
+*ניתוח הכנסות והתפלגויות בזמן אמת לשליטה מלאה במערכת.*
+![Dashboard](./screenshots/dashboard.png)
+
+### ⚙️ ניהול ועריכת תוכן (Admin Panel)
+*ממשק CRUD מלא, נוח ואינטואיטיבי לניהול המערכת.*
 ![Admin Management](./screenshots/admin.png)
-*ממשק CRUD מלא ונוח לניהול המערכת*
 
 ---
 
-## תכונות ליבה (Core Features)
+## 🚀 תכונות ליבה (Core Features)
 
-###  חווית משתמש (Frontend)
+### 👤 חווית משתמש (Frontend)
 * **נציגה וירטואלית "אלישבע":** צ'אט-בוט חכם המוטמע במערכת למתן עזרה ושירות לקוחות אינטראקטיבי.
 * **מערכת הזמנות דינמית:** ניהול עגלת קניות בזמן אמת עם חישובים אוטומטיים.
 * **UI/UX מודרני:** עיצוב Dark Mode, רספונסיביות מלאה ואנימציות חלקות לחוויית משתמש מקסימלית.
 
-###  מנוע צד שרת (Backend)
+### ⚙️ מנוע צד שרת (Backend)
 * **מנוע הגרלות:** מנגנון אוטומטי המבצע הגרלות מדויקות לכל מתנה בנפרד.
 * **אבטחה מתקדמת:** אימות והרשאות משתמשים באמצעות טוקנים (JWT) והגבלת קצב בקשות (Rate Limiting).
 * **אוטומציית אימיילים:** שליחת הודעות אוטומטיות לזוכים המאושרים באמצעות שירותי SMTP.
@@ -43,7 +48,7 @@
 
 ---
 
-## ארכיטקטורה וטכנולוגיות
+## 🛠 ארכיטקטורה וטכנולוגיות
 
 ### Backend (API)
 * **Framework:** ASP.NET Core (.NET 8) / C# 12
@@ -57,7 +62,7 @@
 
 ---
 
-## התקנה והרצה (Quick Start)
+## 🏗 התקנה והרצה (Quick Start)
 
 **1. שיבוט הפרויקט (Clone):**
 `git clone https://github.com/elisheva-666/chinese-auction-system.git`
@@ -71,6 +76,3 @@
 * נווט לתיקיית `chinese-auction-web`.
 * התקן תלותים באמצעות: `npm install`.
 * הרץ את הפרויקט: `ng serve`.
-
----
-
