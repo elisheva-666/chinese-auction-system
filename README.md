@@ -1,4 +1,4 @@
-# 🎁 Magdalor Tech - Chinese Auction System
+#  Magdalor Tech - Chinese Auction System
 ### פלטפורמה מתקדמת מקצה לקצה (Full-Stack) לניהול מערכות מכירה והגרלות
 
 ![Banner](https://img.shields.io/badge/.NET-8.0-blueviolet?style=for-the-badge&logo=dotnet)
@@ -9,7 +9,7 @@
 
 ---
 
-## 📸 מבט אל המערכת (Visual Showcase)
+##  מבט אל המערכת (Visual Showcase)
 
 **דף הבית והתחברות** | **נציגה וירטואלית מבוססת AI**
 :---:|:---:
@@ -28,14 +28,14 @@
 
 ---
 
-## 🚀 תכונות ליבה (Core Features)
+## תכונות ליבה (Core Features)
 
-### 👤 חווית משתמש (Frontend)
+###  חווית משתמש (Frontend)
 * **נציגה וירטואלית "אלישבע":** צ'אט-בוט חכם המוטמע במערכת למתן עזרה ושירות לקוחות אינטראקטיבי.
 * **מערכת הזמנות דינמית:** ניהול עגלת קניות בזמן אמת עם חישובים אוטומטיים.
 * **UI/UX מודרני:** עיצוב Dark Mode, רספונסיביות מלאה ואנימציות חלקות לחוויית משתמש מקסימלית.
 
-### ⚙️ מנוע צד שרת (Backend)
+###  מנוע צד שרת (Backend)
 * **מנוע הגרלות:** מנגנון אוטומטי המבצע הגרלות מדויקות לכל מתנה בנפרד.
 * **אבטחה מתקדמת:** אימות והרשאות משתמשים באמצעות טוקנים (JWT) והגבלת קצב בקשות (Rate Limiting).
 * **אוטומציית אימיילים:** שליחת הודעות אוטומטיות לזוכים המאושרים באמצעות שירותי SMTP.
@@ -43,7 +43,7 @@
 
 ---
 
-## 🛠 ארכיטקטורה וטכנולוגיות
+## ארכיטקטורה וטכנולוגיות
 
 ### Backend (API)
 * **Framework:** ASP.NET Core (.NET 8) / C# 12
@@ -57,13 +57,13 @@
 
 ---
 
-## 🏗 התקנה והרצה (Quick Start)
+## התקנה והרצה (Quick Start)
 
 **1. שיבוט הפרויקט (Clone):**
 `git clone https://github.com/elisheva-666/chinese-auction-system.git`
 
 **2. הגדרת צד שרת (API):**
-* נווט לתיקיית `chinese-auction-api`.
+* נווט לתיקיית `final-final-api`.
 * עדכן את ה-`ConnectionString` ב-`appsettings.json`.
 * הרץ את הפקודה: `dotnet run`.
 
@@ -74,5 +74,3 @@
 
 ---
 
-## ✉️ יצירת קשר
-פרויקט זה נבנה ופותח כחלק ממערכת **Magdalor Tech**. לכל שאלה, דיווח על באגים או בקשות נוספות, ניתן לפתוח Issue ברפוזיטורי.
