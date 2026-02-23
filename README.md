@@ -13,12 +13,12 @@
 
 **דף הבית והתחברות** | **נציגה וירטואלית מבוססת AI**
 :---:|:---:
-![Home Page](./screenshots/home.jpg) | ![AI Chatbot](./screenshots/chat.png)
+![Home Page](./screenshots/home.png) | ![AI Chatbot](./screenshots/chat.png)
 *ממשק כניסה מעוצב עם ספירה לאחור* | *אלישבע - עוזרת אישית המלווה את המשתמש*
 
 **קטלוג פרסים יוקרתי** | **לוח בקרה למנהל (Analytics)**
 :---:|:---:
-![Catalog](./screenshots/catalog.jpg) | ![Dashboard](./screenshots/dashboard.png)
+![Catalog](./screenshots/catalog.png) | ![Dashboard](./screenshots/dashboard.png)
 *סינון ומיון מתקדם של פרסים* | *ניתוח הכנסות והתפלגויות בזמן אמת*
 
 **ניהול ועריכת תוכן (Admin Panel)**
