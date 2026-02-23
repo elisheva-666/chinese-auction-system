@@ -216,39 +216,3 @@ app.MapControllers();
 
 app.Run();
 
-// =======================
-// LotteryService
-// =======================
-public class LotteryService : ILotteryService
-{
-    private readonly IOrderRepository _orderRepo;
-    private readonly IGiftRepository _giftRepo;
-    private readonly ILotteryRepository _lotteryRepo;
-    private readonly IUserRepository _userRepo;
-    private readonly IMapper _mapper;
-    private readonly ILogger<LotteryService> _logger;
-    private readonly string _reportsPath;
-    private readonly IEmailSender _emailSender;
-
-    public LotteryService(
-        IOrderRepository orderRepo,
-        IGiftRepository giftRepo,
-        ILotteryRepository lotteryRepo,
-        IUserRepository userRepo,
-        IMapper mapper,
-        ILogger<LotteryService> logger,
-        IWebHostEnvironment env,
-        IEmailSender emailSender)
-    {
-        _orderRepo = orderRepo;
-        _giftRepo = giftRepo;
-        _lotteryRepo = lotteryRepo;
-        _userRepo = userRepo;
-        _mapper = mapper;
-        _logger = logger;
-        _emailSender = emailSender;
-
-        _reportsPath = Path.Combine(env.ContentRootPath, "Reports");
-        if (!Directory.Exists(_reportsPath)) Directory.CreateDirectory(_reportsPath);
-    }
-}

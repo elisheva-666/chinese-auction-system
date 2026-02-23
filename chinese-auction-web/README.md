@@ -1,3 +1,44 @@
+# Chinese Auction Web
+
+תצוגת frontend לפרויקט "Chinese Auction System" — יישום ווב מבוסס Angular ו-TypeScript שמיועד לנהל מכרזים/הגרלות בסגנון "Chinese Auction".
+
+**טכנולוגיות מרכזיות:**
+- Angular
+- TypeScript
+- Sass (SCSS)
+- Node.js / npm
+
+**מבנה פרויקט (נקודות מפתח):**
+- תיקיית מקור: [src](src)
+- קבצי תצורה של Angular: [angular.json](angular.json)
+- תלותים ופקודות npm: [package.json](package.json)
+- משאבים סטטיים: [public](public)
+
+**התקנה והרצה מקומית**
+להתקין תלותים:
+```bash
+npm install
+```
+להריץ בסביבת פיתוח:
+```bash
+npm start
+```
+להריץ בדיקות (אם קיימות):
+```bash
+npm test
+```
+
+הפרויקט כולל משימות ב-`package.json`; במידת הצורך התקין גם את הגרסאות המתאימות של Node ו-npm.
+
+**תרומות ופיתוח**
+- פתיחת Pull Request להסרת באגים, הוספת תכונות או שיפור התיעוד.
+- לפני שליחת PR — הרץ את הבדיקות והקפד על פורמט הקוד.
+
+**רישיון**
+אנא הוסף/י קובץ `LICENSE` עם סוג הרישיון הרצוי (למשל MIT).
+
+**יצירת קשר**
+לשאלות או בקשות נוספות — פתח/י Issue או פנה/י למחבר הפרויקט.
 # ChineseAuction
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.8.
