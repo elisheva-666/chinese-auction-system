@@ -1,0 +1,60 @@
+<div class="form-wrapper-clean" dir="rtl">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-grid">
+
+            <div class="field-group">
+                <label>שם המתנה <span class="required">*</span></label>
+                <input pInputText formControlName="name" placeholder="הכניסי שם מתנה..." />
+                @if (form.get('name')?.touched && form.get('name')?.invalid) {
+                <small class="error-hint"><i class="pi pi-exclamation-circle"></i> שדה חובה</small>
+                }
+            </div>
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label>מחיר כרטיס</label>
+                    <p-inputNumber formControlName="ticketPrice" mode="currency" currency="ILS" locale="he-IL"
+                        placeholder="₪ 0.00"></p-inputNumber>
+                </div>
+                <div class="field-group">
+                    <label>קטגוריה</label>
+                    <p-select [options]="categories" formControlName="categoryId" optionLabel="name" optionValue="id"
+                        placeholder="בחרי..." appendTo="body"></p-select>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label>תיאור</label>
+                <textarea pInputTextarea formControlName="description" rows="2"
+                    placeholder="ספרי קצת על המתנה..."></textarea>
+            </div>
+
+            <div class="field-group">
+                <label>תמונת המתנה</label>
+                <div class="upload-zone" (click)="fileInput.click()"
+                    (dragover)="$event.preventDefault(); $event.stopPropagation()" (drop)="onFileDrop($event)">
+
+                    <input type="file" #fileInput (change)="onFileSelect($event)" accept="image/*"
+                        style="display: none;">
+
+                    @if (!imagePreview) {
+                    <div class="placeholder-content">
+                        <i class="pi pi-cloud-upload"></i>
+                        <span>לחצי או גררי תמונה לכאן</span>
+                    </div>
+                    } @else {
+                    <div class="preview-container">
+                        <img [src]="imagePreview" alt="preview">
+                        <div class="change-overlay">החליפי תמונה (בגרירה או לחיצה)</div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" class="btn-cancel" (click)="cancel.emit()">ביטול</button>
+            <button type="submit" class="btn-save" [disabled]="form.invalid">שמור מתנה</button>
+        </div>
+    </form>
+</div>

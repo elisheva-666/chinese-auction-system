@@ -1,0 +1,216 @@
+@use "../../../../styles.scss" as global;
+
+.page-container {
+    padding: 2rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    direction: rtl;
+    font-family: 'Heebo', sans-serif;
+}
+
+/* --- כותרת דף --- */
+.page-title {
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-bottom: 2.5rem;
+    color: white;
+    text-align: right; // מיושר לימין כמו בתורמים
+
+    .highlight {
+        background: linear-gradient(90deg, #a855f7, #ec4899); // גרדיאנט סגול-ורוד יוקרתי
+        display: inline-block;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+    }
+}
+
+/* --- סרגל בקרה (חיפוש ורענון) --- */
+.controls-container {
+    margin-bottom: 2.5rem;
+}
+
+.controls-glass-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    .search-section {
+        flex: 1;
+
+        .input-glow-wrapper {
+            position: relative;
+
+            i {
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #a855f7;
+                pointer-events: none;
+            }
+
+            input {
+                width: 100% !important;
+                padding: 0.8rem 3rem 0.8rem 1rem !important;
+                background: #0f172a !important;
+                border: 1px solid #334155 !important;
+                border-radius: 10px !important;
+                color: white !important;
+                transition: 0.3s;
+
+                &:focus {
+                    border-color: #a855f7 !important;
+                    box-shadow: 0 0 10px rgba(168, 85, 247, 0.2) !important;
+                    outline: none;
+                }
+            }
+        }
+    }
+}
+
+/* כפתור רענון */
+::ng-deep .reset-btn .p-button {
+    width: 45px !important;
+    height: 45px !important;
+    border-radius: 10px !important;
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    color: #94a3b8 !important;
+
+    &:hover {
+        color: #a855f7 !important;
+        border-color: #a855f7 !important;
+        background: rgba(168, 85, 247, 0.05) !important;
+    }
+}
+
+/* --- עיצוב הטבלה --- */
+.table-container {
+    background: #1e293b;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    overflow: hidden;
+}
+
+::ng-deep .custom-premium-table {
+    .p-datatable-thead>tr>th {
+        background: transparent !important;
+        color: #94a3b8 !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;
+        padding: 1.5rem !important;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.03) !important;
+        text-align: right !important;
+
+        /* יישור כותרות מרכזיות */
+        &.text-center {
+            text-align: center !important;
+        }
+    }
+
+    .p-datatable-tbody>tr>td {
+        padding: 1.2rem !important;
+        border: none !important;
+        vertical-align: middle;
+
+        /* יישור תוכן תאים מרכזיים */
+        &.text-center {
+            text-align: center !important;
+        }
+    }
+}
+
+/* באדג'ים ועיצוב תאים */
+.user-id-badge {
+    background: rgba(168, 85, 247, 0.1);
+    color: #a855f7;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.price-text {
+    color: #10b981;
+    /* ירוק לכסף */
+    font-weight: 700;
+}
+
+.orders-count {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* כפתור פעולה (פרטים) */
+.action-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
+    color: #94a3b8;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+
+    &:hover {
+        transform: translateY(-3px);
+        background: #3b82f6; // כחול לפרטים
+        color: white;
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    }
+}
+
+/* --- העתקת עיצוב ה-Tooltip (כמו שאהבת) --- */
+::ng-deep body {
+    .p-tooltip {
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.4));
+        z-index: 1100; // לוודא שזה מעל הכל
+
+        .p-tooltip-text {
+            background: #1e293b !important; // צבע הרקע הכהה שלך
+            color: #ffffff !important;
+            padding: 8px 12px !important;
+            border-radius: 8px !important;
+            font-size: 0.8rem !important;
+            position: relative;
+        }
+
+        /* עיצוב המשולש */
+        .p-tooltip-arrow {
+            display: block !important;
+            position: absolute !important;
+            left: 50% !important; // מרכוז ביחס לבועה
+            transform: translateX(-50%) !important; // פיצוי על רוחב המשולש
+            border-width: 6px 6px 0 !important; // גודל המשולש
+            border-top-color: #1e293b !important; // חייב להיות צבע הרקע של הבועה
+        }
+
+        /* תיקון מיקום ספציפי כשה-Tooltip מעל הכפתור */
+        &.p-tooltip-top {
+            margin-top: -5px !important;
+
+            .p-tooltip-arrow {
+                bottom: -6px !important; // מצמיד את המשולש לתחתית הבועה
+            }
+        }
+
+        /* הסרת ה-"צל" הלבן או הכפול ש-PrimeNG לפעמים מוסיף */
+        .p-tooltip-arrow::before {
+            display: none !important;
+        }
+    }
+}

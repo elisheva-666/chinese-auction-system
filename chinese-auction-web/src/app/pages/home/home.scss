@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&display=swap');
+
+$bg-dark: #0f172a;
+$primary-purple: #a855f7;
+$primary-pink: #ec4899;
+$text-color: #ffffff;
+$text-muted: #94a3b8;
+$card-bg: rgba(255, 255, 255, 0.05);
+
+:host {
+  display: block;
+  font-family: 'Heebo', sans-serif;
+  background-color: $bg-dark;
+  color: $text-color;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.home-container {
+
+  .hero {
+    position: relative;
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background-color: #000; // רקע שחור שנחשף בזמן ה-Fade
+
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      // יצירת הצללה מדורגת למראה יוקרתי
+      background: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0.2) 0%,
+          rgba(15, 23, 42, 0.7) 100%);
+      z-index: 2; // מעל הסרטון
+    }
+
+    .background-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      z-index: 1;
+      filter: brightness(0.8);
+
+      /* --- אנימציית הטשטוש בלופ --- */
+      /* שמי לב: אם הסרטון שלך הוא באורך 5 שניות, שוני ל-5s */
+      animation: videoLoopFade 5 infinite;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      max-width: 800px;
+      padding: 20px;
+
+      h1 {
+        font-size: 4rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+        background: linear-gradient(to right, #fff, $primary-purple, $primary-pink);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+      }
+
+      .subtitle {
+        font-size: 1.5rem;
+        color: #e2e8f0;
+        margin-bottom: 3rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .cta-button {
+        background: linear-gradient(45deg, $primary-purple, $primary-pink);
+        border: none;
+        padding: 18px 45px;
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: white;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba($primary-purple, 0.4);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+//////////////////
+        // הוספת צל זוהר שמתאים לסגנון ההייטקי
+        box-shadow: 0 0 20px rgba($primary-purple, 0.4), 0 10px 25px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        &:hover {
+          transform: translateY(-5px) scale(1.05);
+          // הגברת הזוהר במעבר עכבר
+          box-shadow: 0 0 30px rgba($primary-pink, 0.6), 0 15px 35px rgba(0, 0, 0, 0.4);
+          filter: brightness(1.1);
+        }
+
+        &:active {
+          transform: translateY(-2px);
+        }
+///////////////////
+
+        // &:hover {
+        //   transform: translateY(-5px);
+        //   box-shadow: 0 15px 35px rgba($primary-pink, 0.6);
+        // }
+      }
+    }
+  }
+
+  // --- Features Section ---
+  .features {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 6rem 2rem;
+    flex-wrap: wrap;
+    background: $bg-dark;
+    position: relative;
+    z-index: 5;
+
+    .feature-card {
+      background: $card-bg;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2.5rem 2rem;
+      border-radius: 24px;
+      text-align: center;
+      width: 320px;
+      transition: all 0.4s ease;
+
+      .icon-circle {
+        font-size: 2.8rem;
+        background: rgba($primary-purple, 0.15);
+        width: 90px;
+        height: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin: 0 auto 1.5rem auto;
+        color: $primary-purple;
+      }
+
+      h3 {
+        font-size: 1.6rem;
+        color: #fff;
+      }
+
+      p {
+        color: $text-muted;
+        line-height: 1.7;
+      }
+
+      &:hover {
+        transform: translateY(-15px);
+        border-color: $primary-pink;
+      }
+    }
+  }
+}
+
+/* --- הגדרת האנימציה למעבר חלק --- */
+@keyframes videoLoopFade {
+  0% {
+    opacity: 0;
+  }
+
+  // התחלה בטשטוש
+  5% {
+    opacity: 1;
+  }
+
+  // כניסה מהירה לעבודה
+  95% {
+    opacity: 1;
+  }
+
+  // נשאר גלוי לאורך רוב הזמן
+  100% {
+    opacity: 0;
+  }
+
+  // נעלם בעדינות רגע לפני שהלופ מתחיל מחדש
+}
+
+/* אנימציות תוכן */
+.animate-pop-in {
+  animation: popIn 0.8s cubic-bezier(0.26, 0.53, 0.74, 1.48) forwards;
+  opacity: 0;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 1s ease-out forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

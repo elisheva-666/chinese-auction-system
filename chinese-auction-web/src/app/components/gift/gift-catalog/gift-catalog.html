@@ -1,0 +1,82 @@
+<div class="catalog-container" dir="rtl">
+    <header class="catalog-header">
+        <h1 class="catalog-title">נבחרת המתנות <span class="highlight">2026</span></h1>
+        <p class="catalog-subtitle">הזדמנות נדירה לזכות בפרסים שחלמת עליהם</p>
+    </header>
+
+    <div class="controls-wrapper">
+        <div class="search-bar-container">
+            <div class="search-input-group">
+                <input type="text" pInputText placeholder="חיפוש לפי שם פרס או קטגוריה..." [ngModel]="searchTerm()"
+                    (ngModelChange)="searchTerm.set($event)" />
+                <i class="pi pi-search search-icon"></i>
+            </div>
+
+            <div class="sort-select-wrapper">
+                <p-select [options]="sortOptions" (onChange)="onSortPrice($event)" optionLabel="label"
+                    optionValue="value" placeholder="מיון לפי מחיר" class="premium-sort-select">
+                </p-select>
+            </div>
+
+            <div class="action-buttons">
+                <p-button icon="pi pi-refresh" (onClick)="resetFilters()" [text]="true" class="icon-only-btn"
+                    pTooltip="איפוס הגדרות" tooltipPosition="bottom">
+                </p-button>
+                <p-button icon="pi pi-filter" (onClick)="onSortCategory()" [text]="true" class="icon-only-btn"
+                    pTooltip="סינון קטגוריות" tooltipPosition="bottom">
+                </p-button>
+            </div>
+        </div>
+    </div>
+    @if (isLoading()) {
+    <div class="gift-grid">
+        @for (i of [1,2,3,4,5,6,7,8]; track i) {
+        <div class="skeleton-card"></div>
+        }
+    </div>
+    }
+    <div class="gift-grid">
+        @for (gift of filteredGifts(); track gift.id) {
+        <div class="gift-card-wrapper" [ngClass]="{ 'drawn-card': gift.isDrawn }">
+            <div class="gift-premium-card" [ngClass]="{ 'drawn-gift': gift.isDrawn }">
+                <div class="image-section">
+                    <!-- תגית הוגרל -->
+                    <div *ngIf="gift.isDrawn" class="drawn-label">
+                        <div class="drawn-label-content">
+                            <i class="pi pi-check-circle"></i>
+                            <div class="drawn-text-info">
+                                <span class="drawn-title">הוגרל - הזוכה</span>
+                                <span class="winner-name">{{ gift.winnerName }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <img [alt]="gift.name"
+                        [src]="gift.imageUrl?.startsWith('http') ? gift.imageUrl : IMAGE_BASE_URL + gift.imageUrl" 
+                        [ngClass]="{ 'drawn-image': gift.isDrawn }" />
+                    <div class="price-overlay" [ngClass]="{ 'hidden': gift.isDrawn }">
+                        <span class="currency">₪</span>
+                        <span class="amount">{{gift.ticketPrice}}</span>
+                    </div>
+                </div>
+                <div class="content-section">
+                    <h3 class="gift-name">{{gift.name}}</h3>
+                    <p class="donor-line">בהוקרה מאת: <span>{{gift.donorName}}</span></p>
+
+                    <div class="card-footer">
+                        <button class="cart-btn" (click)="addToCart(gift)">
+                            <i class="pi pi-shopping-cart"></i>
+                            <span>הבטיחי את מקומך</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }@empty {
+        <div class="empty-state">
+            <i class="pi pi-search-minus"></i>
+            <p>לא מצאנו בדיוק את מה שת... נסי חיפוש אחר?</p>
+        </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="auth-container" dir="rtl">
+  <div class="auth-header">
+    <i class="pi pi-user-plus tech-icon"></i>
+    <h2>הצטרפות ל-Magdalor</h2>
+    <p>צרו חשבון והתחילו ברכישה</p>
+  </div>
+
+  <form #regForm="ngForm" (ngSubmit)="onRegister()" class="auth-form">
+
+    <div class="input-field-group">
+      <label>שם מלא</label>
+      <p-iconfield iconPosition="right">
+        <input pInputText name="name" [(ngModel)]="user.name" placeholder="ישראל ישראלי" required />
+        <p-inputicon class="pi pi-user"></p-inputicon>
+      </p-iconfield>
+    </div>
+
+    <div class="input-field-group">
+      <label>אימייל</label>
+      <p-iconfield iconPosition="right">
+        <input pInputText type="email" name="email" [(ngModel)]="user.email" placeholder="example@mail.com" required />
+        <p-inputicon class="pi pi-envelope"></p-inputicon>
+      </p-iconfield>
+    </div>
+
+    <div class="input-field-group">
+      <label>טלפון</label>
+      <p-iconfield iconPosition="right">
+        <p-inputmask name="phone" [(ngModel)]="user.phone" mask="999-9999999" placeholder="050-0000000"></p-inputmask>
+        <p-inputicon class="pi pi-phone"></p-inputicon>
+      </p-iconfield>
+    </div>
+
+    <div class="input-field-group">
+      <label>סיסמה</label>
+      <div class="password-fixed-wrapper">
+        <p-password name="password" [(ngModel)]="user.password" [toggleMask]="true" [feedback]="false"
+          placeholder="סיסמה (6+ תווים)" required styleClass="w-full">
+        </p-password>
+        <i class="pi pi-lock right-fixed-icon"></i>
+      </div>
+    </div>
+
+    <div class="input-field-group">
+      <label>אימות סיסמה</label>
+      <div class="password-fixed-wrapper">
+        <p-password name="confirmPassword" [(ngModel)]="confirmPassword" [toggleMask]="true" [feedback]="false"
+          placeholder="הקישי שוב..." required styleClass="w-full">
+        </p-password>
+        <i class="pi pi-shield right-fixed-icon"></i>
+      </div>
+    </div>
+
+    <p-button label="צור חשבון" icon="pi pi-check" type="submit" [loading]="isLoading()" [disabled]="!regForm.valid"
+      class="submit-button"></p-button>
+
+    <div class="auth-footer">
+      <span>כבר רשומה?</span>
+      <p-button label="להתחברות" [text]="true" (onClick)="switchToLogin.emit()"></p-button>
+    </div>
+  </form>
+</div>

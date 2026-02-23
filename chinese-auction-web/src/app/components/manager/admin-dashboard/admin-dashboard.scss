@@ -1,0 +1,164 @@
+@use "sass:color";
+$neon-cyan: #06b6d4;
+$neon-purple: #bd00ff;
+$neon-gold: #eab308;
+$glass-bg: rgba(15, 23, 42, 0.6);
+$dark-bg: #0f172a;
+
+
+.dashboard-wrapper {
+    direction: rtl;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    
+    h1 {
+        font-size: 2.5rem;
+        color: #fff;
+        margin-bottom: 0.5rem;
+        
+        .highlight {
+            color: $neon-cyan;
+            text-shadow: 0 0 15px rgba($neon-cyan, 0.5);
+        }
+    }
+    
+    .subtitle {
+        color: rgba(255,255,255,0.6);
+        font-size: 1.1rem;
+    }
+}
+
+/* --- Stats Cards --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: #fff;
+    }
+
+    .stat-content {
+        display: flex;
+        flex-direction: column;
+        
+        .stat-title {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+        .stat-value {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: bold;
+            
+            &.text-sm { font-size: 1.2rem; } // למקרה של שם ארוך
+        }
+    }
+    
+    // צבעים ייחודיים לכל כרטיס
+    &.revenue-card .stat-icon { background: linear-gradient(135deg, $neon-cyan, color.adjust($neon-cyan, $lightness: -20%)); box-shadow: 0 4px 15px rgba($neon-cyan, 0.3); }
+    &.gifts-card .stat-icon { background: linear-gradient(135deg, $neon-purple, color.adjust($neon-purple, $lightness: -20%)); box-shadow: 0 4px 15px rgba($neon-purple, 0.3); }
+    &.donors-card .stat-icon { background: linear-gradient(135deg, #ec4899, color.adjust(#ec4899, $lightness: -20%)); box-shadow: 0 4px 15px rgba(#ec4899, 0.3); }
+    &.star-card .stat-icon { background: linear-gradient(135deg, $neon-gold, color.adjust($neon-gold, $lightness: -20%)); box-shadow: 0 4px 15px rgba($neon-gold, 0.3); }
+}
+
+/* --- Charts Section --- */
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+
+    .chart-box {
+        padding: 1.5rem;
+        h3 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            border-right: 4px solid $neon-cyan;
+            padding-right: 10px;
+        }
+    }
+}
+
+.glass-panel {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* --- Tabs Customization --- */
+::ng-deep .dashboard-tabs {
+    .p-tabview-nav {
+        background: transparent !important;
+        border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+        
+        li {
+            background: transparent !important;
+            
+            .p-tabview-nav-link {
+                background: transparent !important;
+                color: rgba(255,255,255,0.6) !important;
+                border: none !important;
+                font-size: 1.1rem;
+                padding: 1.5rem;
+                transition: 0.3s;
+                
+                &:hover {
+                    color: #fff !important;
+                    background: rgba(255,255,255,0.05) !important;
+                }
+            }
+
+            &.p-highlight .p-tabview-nav-link {
+                color: $neon-cyan !important;
+                border-bottom: 3px solid $neon-cyan !important;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .p-tabview-panels {
+        background: transparent !important;
+        padding: 2rem 1rem !important;
+    }
+    
+    // הסתרת הכותרות הכפולות של הקומפוננטות הפנימיות כדי שלא יתנגשו עם הדשבורד
+    app-gift-gallery, app-management-donor, app-manager-users {
+        .page-title { display: none; }
+        .page-container { padding: 0; max-width: 100%; }
+    }
+}

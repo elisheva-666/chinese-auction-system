@@ -1,0 +1,65 @@
+<p-drawer [visible]="cartService.isCartVisible()" (visibleChange)="cartService.isCartVisible.set($event)"
+  position="right" 
+  [style]="{width: '420px', background: '#0f172a', color: 'white', borderLeft: '1px solid rgba(6, 182, 212, 0.2)'}"> 
+  
+  <ng-template pTemplate="header">
+    <div class="cart-header-custom" style="display: flex; align-items: center; gap: 15px;">
+      <i class="pi pi-shopping-bag neon-icon"></i>
+      <span class="header-text">הסל שלי</span>
+    </div>
+  </ng-template>
+
+  <div class="cart-container">
+    @let cart = cartService.cartItems();
+
+    @if (cart && cart.orderItems && cart.orderItems.length > 0) {
+    <div class="items-list">
+      @for (item of cart.orderItems; track item.id) {
+      <div class="cart-item-card">
+        <div class="item-details">
+          <span class="item-name">{{ item.giftName }}</span>
+          <span class="item-price">{{ item.unitPrice }} ₪</span>
+        </div>
+
+        <div class="item-actions-row">
+          <div class="quantity-control">
+            <button (click)="cartService.updateItemQuantity(item.giftId, -1)" [disabled]="item.quantity <= 1">
+              <i class="pi pi-minus"></i>
+            </button>
+            <span class="qty-num">{{ item.quantity }}</span>
+            <button (click)="cartService.updateItemQuantity(item.giftId, 1)">
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+
+          <button class="delete-btn" (click)="cartService.removeOrderItem(cart.id, item.id).subscribe()">
+            <i class="pi pi-trash"></i>
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+
+    <div class="cart-footer-premium">
+      <div class="total-row">
+        <span>סה"כ לתשלום:</span>
+        <span class="total-amount">{{ cart.totalAmount }} ₪</span>
+      </div>
+      <button class="checkout-btn" (click)="checkout()">
+        <span>מעבר לתשלום מאובטח</span>
+        <i class="pi pi-arrow-left"></i>
+      </button>
+    </div>
+
+    } @else {
+    <div class="empty-cart-state">
+      <div class="icon-circle">
+        <i class="pi pi-shopping-cart"></i>
+      </div>
+      <h3>הסל שלך ריק</h3>
+      <p>זה הזמן לבחור לעצמך מתנה מפנקת...</p>
+      <button class="btn-primary" (click)="cartService.isCartVisible.set(false)">המשך בקניות</button>
+    </div>
+    }
+  </div>
+</p-drawer>

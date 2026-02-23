@@ -1,0 +1,233 @@
+/* --- Gift Store 2026 - Global Stylesheet (Clean & Professional) --- */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Heebo:wght@300;400;700&display=swap');
+@import "primeicons/primeicons.css";
+
+:root {
+  --neon-cyan: #06b6d4;
+  --bg-dark: #0f172a;
+  --surface-card: #1e293b;
+  --text-main: #ffffff;
+  --text-muted: #94a3b8;
+}
+
+/* 1. הגדרות בסיס - עברית ו-RTL חובה */
+body {
+  direction: rtl !important;
+  text-align: right !important;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Heebo', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.pi {
+  direction: ltr !important;
+  display: inline-block;
+}
+
+/* 2. מערכת כפתורים גלובלית (מעוגלים ומודרניים) */
+
+button,
+.p-button {
+  font-family: 'Heebo', sans-serif !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+  font-weight: 700 !important;
+}
+
+/* כפתור ראשי */
+.btn-primary,
+.p-confirm-dialog-accept.p-button,
+.checkout-btn {
+  background: linear-gradient(135deg, #06b6d4, #0891b2) !important;
+  color: #0f172a !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3) !important;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(6, 182, 212, 0.5) !important;
+  }
+}
+
+/* 3. עיצוב הדיאלוגים והסל (Drawer) - ניקוי האיקסים והפינות */
+::ng-deep {
+
+  .p-dialog,
+  .p-drawer {
+    background: var(--surface-card) !important;
+    border: 1px solid rgba(6, 182, 212, 0.2) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+    border-radius: 20px !important;
+    direction: rtl !important;
+    /* מוודא עברית בפנים */
+
+    /* עיצוב ה-Header - מניעת דחיסות */
+    .p-dialog-header,
+    .p-drawer-header {
+      padding: 1.5rem 2rem !important;
+      color: var(--neon-cyan) !important;
+      background: transparent !important;
+      display: flex !important;
+      flex-direction: row-reverse !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+
+      .p-dialog-title,
+      .header-text {
+        font-family: 'Orbitron', sans-serif !important;
+        color: var(--neon-cyan) !important;
+        font-size: 1.2rem !important;
+        margin: 0 !important;
+      }
+    }
+
+    /* ניקוי האיקס המכוער (הריבוע הכחול בתמונה שלך) */
+    .p-dialog-header-icon,
+    .p-drawer-close-button,
+    .p-dialog-header-close {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      color: var(--neon-cyan) !important;
+      width: 32px !important;
+      height: 32px !important;
+      border-radius: 50% !important;
+      transition: 0.3s;
+      margin-left: 0 !important;
+
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0 !important;
+      /* מבטל פדינג שמזיז אותו */
+      margin: 0 !important;
+      /* מונע ממנו להידבק לקצה */
+
+
+      &:hover {
+        background: rgba(6, 182, 212, 0.1) !important;
+        /* רק הבהוב קל בנגיעה */
+        // transform: rotate(90deg);
+      }
+
+      /* ביטול ה-Focus Ring של PrimeNG */
+      &:focus {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+    }
+
+    .p-dialog-content,
+    .p-drawer-content {
+      padding: 1.5rem 2rem !important;
+      background: transparent !important;
+      color: var(--text-main) !important;
+      text-align: right !important;
+    }
+  }
+
+  /* טשטוש הרקע */
+  .p-component-overlay {
+    backdrop-filter: blur(8px) !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+  }
+}
+
+/* --- סידור פוטר הדיאלוג (Confirm Dialog וכדומה) --- */
+/* בתוך styles.scss - עדכון אזור הדיאלוגים */
+::ng-deep {
+  .p-dialog-footer {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 1.5rem !important; // הגדלת המרווח בין הכפתורים
+    padding: 2rem !important; // יותר אוויר מסביב
+    background: transparent !important;
+
+    .p-button {
+      margin: 0 !important;
+      min-width: 160px !important; // הגדלת רוחב המינימום לכפתור נוכח
+      padding: 0.8rem 1.5rem !important; // הוספת Padding פנימי לנפח
+      font-size: 1rem !important;
+      display: flex !important;
+      justify-content: center !important;
+      border-radius: 14px !important; // עיגול מעט יותר מודרני
+    }
+
+    /* עיצוב כפתור הביטול (Reject) - שיהיה קיים אבל פחות מודגש מהראשי */
+    .p-confirm-dialog-reject {
+      background: rgba(148, 163, 184, 0.1) !important; // רקע אפרפר שקוף
+      color: var(--text-muted) !important;
+      border: 1px solid rgba(148, 163, 184, 0.3) !important;
+      order: 2;
+
+      &:hover {
+        background: rgba(148, 163, 184, 0.2) !important;
+        color: var(--text-main) !important;
+      }
+    }
+
+    /* כפתור האישור (Accept) - כבר מוגדר כ-btn-primary אבל נוודא סדר */
+    .p-confirm-dialog-accept {
+      order: 1;
+    }
+  }
+}
+
+/* 4. תיקון ל-Select (קטגוריות) */
+::ng-deep .p-select-overlay {
+  direction: rtl !important;
+
+  .p-select-option {
+    text-align: right !important;
+    justify-content: flex-start !important;
+  }
+}
+
+::ng-deep body {
+  .p-tooltip {
+    padding: 0 !important;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+    pointer-events: none;
+    /* שלא יפריע לעכבר */
+
+    .p-tooltip-text {
+      background: #1e293b !important; // צבע הרקע שלך
+      color: rgba(255, 255, 255, 0.95) !important;
+      border: none !important; // בלי הגבול הלבן!
+      font-weight: 500 !important;
+      font-size: 0.8rem !important; // קצת יותר קטן
+      padding: 6px 10px !important; // פחות נפוח
+      border-radius: 6px !important;
+      position: relative;
+      z-index: 2;
+    }
+
+    &.p-tooltip-top {
+      margin-top: -6px !important; // מרחק קטן יותר מהכפתור
+
+      .p-tooltip-arrow {
+        /* מעלים את החץ המובנה של פריים כדי ליצור אחד נקי */
+        display: none !important;
+      }
+
+      /* חץ נקי שיוצא מהבועה באותו צבע */
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #1e293b;
+        z-index: 3;
+      }
+    }
+  }
+}
+
+

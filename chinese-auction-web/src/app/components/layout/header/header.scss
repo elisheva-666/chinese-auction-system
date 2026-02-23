@@ -1,0 +1,383 @@
+/* --- פס טיימר עליון --- */
+.raffle-timer-bar {
+
+    color: #fff;
+    padding: 8px 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-family: 'Orbitron', sans-serif;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    direction: rtl;
+    /* כדי שהטקסט יהיה מימין למספרים */
+    /* במקום האדום שהיה קודם */
+    background: rgba(2, 6, 23, 0.8);
+    /* כהה מאוד ושקוף */
+    backdrop-filter: blur(10px);
+    /* אפקט זכוכית */
+    border-bottom: 1px solid rgba(6, 182, 212, 0.3);
+
+    /* פס טורקיז עדין */
+    .timer-label {
+        font-weight: bold;
+        font-size: 1rem;
+        letter-spacing: 1px;
+    }
+
+    .timer-digits {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        direction: ltr;
+        /* המספרים משמאל לימין */
+
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+
+            .number {
+                font-size: 1.4rem;
+                font-weight: 700;
+                color: #fff;
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+
+            .label {
+                font-size: 0.7rem;
+                opacity: 0.8;
+                margin-top: 2px;
+            }
+        }
+
+        .separator {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 12px;
+            /* הרמה קלה כדי שיתיישר עם המספרים */
+        }
+    }
+}
+
+/* --- Navbar --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 3rem;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(6, 182, 212, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 80px;
+    /* גובה קבוע כדי לאפשר מרכוז מוחלט */
+}
+
+/* --- לוגו --- */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    z-index: 2;
+    /* מעל הקישורים אם המסך קטן */
+
+    .logo-icon {
+        font-size: 1.5rem;
+        color: var(--neon-cyan);
+        text-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .brand-name {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #fff;
+
+        .highlight {
+            color: var(--neon-cyan);
+        }
+    }
+}
+
+/* --- קישורים (ממורכזים) --- */
+.nav-links {
+    position: absolute;
+    /* מרכוז מוחלט */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 40px;
+
+    a {
+        text-decoration: none;
+        color: #cbd5e1;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        position: relative;
+
+        &:hover,
+        &.active {
+            color: #fff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        /* קו תחתון זוהר לקישור פעיל */
+        &.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        /* ביטלתי את הקו העליון שהיה קודם לטובת מראה נקי יותר */
+        &.active::before {
+            display: none;
+        }
+    }
+}
+
+/* --- צד שמאל (פעולות) --- */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 2;
+}
+
+.login-link {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--neon-cyan);
+    }
+}
+
+/* --- עגלת קניות עם Badge --- */
+.cart-wrapper {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+
+    .cart-icon {
+        font-size: 1.4rem;
+        color: #fff;
+        transition: transform 0.2s;
+    }
+
+    &:hover .cart-icon {
+        transform: scale(1.1);
+        color: var(--neon-cyan);
+    }
+
+    /* העיגול האדום */
+    .cart-badge {
+        position: absolute;
+        top: -5px;
+        right: -8px;
+        background-color: #ef4444;
+        /* אדום בוהק */
+        color: white;
+        font-size: 0.75rem;
+        font-weight: bold;
+        min-width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid rgba(15, 23, 42, 1);
+        /* גבול בצבע הרקע כדי ליצור הפרדה */
+        box-shadow: 0 0 5px rgba(239, 68, 68, 0.6);
+    }
+}
+
+
+/* --- Dropdown (העתקה מהקוד הקודם שלך + תיקונים קלים) --- */
+.dropdown {
+    position: relative;
+    display: inline-block;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 20px;
+        display: none;
+        z-index: 10;
+    }
+
+    &:hover::after {
+        display: block;
+    }
+
+    .dropdown-trigger {
+        padding-bottom: 10px;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        /* מרכוז ה-Dropdown */
+        transform: translateX(-50%);
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(15px);
+        min-width: 180px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(6, 182, 212, 0.2);
+        border-radius: 8px;
+        z-index: 1001;
+        margin-top: 5px;
+        padding: 10px 0;
+        text-align: right;
+
+        a {
+            color: #cbd5e1;
+            padding: 12px 16px;
+            display: block;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            text-align: center;
+            /* טקסט במרכז בתפריט */
+
+            &:hover {
+                background: rgba(6, 182, 212, 0.1);
+                color: var(--neon-cyan);
+            }
+        }
+    }
+
+    &:hover .dropdown-content {
+        display: block;
+        animation: fadeIn 0.2s ease-out;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* התאמה למובייל */
+@media (max-width: 900px) {
+    .nav-links {
+        display: none;
+    }
+
+    /* במובייל מסתירים או הופכים להמבורגר */
+    .raffle-timer-bar {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .raffle-timer-bar .timer-digits {
+        gap: 5px;
+    }
+}
+
+.cart-glow-wrapper {
+    position: relative;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    .cart-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .cart-icon {
+            font-size: 1.6rem;
+            color: #fff;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+            transition: all 0.3s ease;
+        }
+    }
+
+    /* אפקט ההארה במעבר עכבר */
+    &:hover {
+        .cart-icon {
+            color: var(--neon-cyan);
+            filter: drop-shadow(0 0 8px var(--neon-cyan));
+            transform: scale(1.1);
+        }
+    }
+
+    /* הבאג' המאיר (מספר הכרטיסים) */
+    .neon-badge {
+        position: absolute;
+        top: -8px;
+        right: -10px;
+        background: #a855f7;
+        /* סגול */
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 800;
+        min-width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        /* הארה סגולה */
+        box-shadow: 0 0 10px rgba(168, 85, 247, 0.8),
+            0 0 20px rgba(168, 85, 247, 0.4);
+        animation: pulse-glow 2s infinite;
+    }
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 8px rgba(168, 85, 247, 0.7);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(168, 85, 247, 1),
+            0 0 25px rgba(168, 85, 247, 0.4);
+        transform: scale(1.1);
+    }
+
+    100% {
+        box-shadow: 0 0 8px rgba(168, 85, 247, 0.7);
+        transform: scale(1);
+    }
+}

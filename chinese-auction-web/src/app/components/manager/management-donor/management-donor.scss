@@ -1,0 +1,282 @@
+@use "../../../../styles.scss" as global;
+
+.page-container {
+    padding: 2rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    direction: rtl;
+    font-family: 'Heebo', sans-serif;
+}
+
+/* --- כותרת וטקסט מדורג מתוקן --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+
+    .page-title {
+        font-size: 2.8rem;
+        font-weight: 900;
+        margin: 0;
+        color: white;
+
+        .highlight {
+            background: linear-gradient(90deg, #06b6d4, #a78bfa);
+            display: inline-block;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent; // מבטל את ה"קווקו" ומבטיח שהגרדיאנט יוצג
+        }
+    }
+
+    .subtitle {
+        color: #94a3b8;
+        font-size: 1.1rem;
+    }
+}
+
+/* --- כפתור הוספת תורם - פרימיום --- */
+::ng-deep .cta-gradient-btn .p-button {
+    background: linear-gradient(135deg, #06b6d4, #3b82f6) !important;
+    border: none !important;
+    padding: 0.8rem 2rem !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3) !important;
+    transition: all 0.3s ease !important;
+
+    &:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4) !important;
+    }
+}
+
+/* --- חיפוש וסינון --- */
+.search-section {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(12px);
+    padding: 1.5rem;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 2.5rem;
+}
+
+.search-grid {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+
+    .search-field {
+        position: relative;
+        flex: 1;
+
+        i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #06b6d4;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100% !important;
+            padding: 0.8rem 3rem 0.8rem 1rem !important;
+            background: #0f172a !important;
+            border: 1px solid #334155 !important;
+            border-radius: 10px !important;
+            color: white !important;
+
+            &:focus {
+                border-color: #06b6d4 !important;
+                outline: none;
+            }
+        }
+    }
+}
+
+.search-actions {
+    display: flex;
+    gap: 0.8rem;
+
+    .filter-btn,
+    .reset-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+        border: 1px solid #334155;
+        background: #1e293b;
+        color: #94a3b8;
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover {
+            border-color: #06b6d4;
+            color: #06b6d4;
+            background: rgba(6, 182, 212, 0.05);
+        }
+    }
+}
+
+/* --- טבלה משודרגת --- */
+.table-container {
+    background: #1e293b;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+}
+
+::ng-deep .custom-premium-table {
+    .p-datatable-thead>tr>th {
+        background: transparent !important;
+        color: #94a3b8 !important;
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        padding: 1.5rem !important;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.03) !important;
+
+        /* מיישר את כותרת "פעולות ניהול" למרכז בדיוק מעל הכפתורים */
+        &.text-center {
+            text-align: center !important;
+        }
+    }
+
+    .p-datatable-tbody>tr {
+        background: transparent !important;
+        color: white !important;
+        transition: 0.2s;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.02) !important;
+        }
+
+        td {
+            padding: 1.2rem !important;
+            border: none !important;
+        }
+    }
+}
+
+/* --- בועת דיבור (Tooltip) מתוקנת --- */
+/* --- בועת דיבור (Tooltip) מעודנת ונקייה --- */
+::ng-deep body {
+    .p-tooltip {
+        padding: 0 !important;
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+        pointer-events: none;
+        /* שלא יפריע לעכבר */
+
+        .p-tooltip-text {
+            background: #1e293b !important; // צבע הרקע שלך
+            color: rgba(255, 255, 255, 0.95) !important;
+            border: none !important; // בלי הגבול הלבן!
+            font-weight: 500 !important;
+            font-size: 0.8rem !important; // קצת יותר קטן
+            padding: 6px 10px !important; // פחות נפוח
+            border-radius: 6px !important;
+            position: relative;
+            z-index: 2;
+        }
+
+        &.p-tooltip-top {
+            margin-top: -6px !important; // מרחק קטן יותר מהכפתור
+
+            .p-tooltip-arrow {
+                /* מעלים את החץ המובנה של פריים כדי ליצור אחד נקי */
+                display: none !important;
+            }
+
+            /* חץ נקי שיוצא מהבועה באותו צבע */
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -4px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid #1e293b;
+                z-index: 3;
+            }
+        }
+    }
+}
+
+/* --- פרטי תורם בתוך הטבלה --- */
+.donor-name-cell {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.id-badge {
+    background: rgba(6, 182, 212, 0.1);
+    color: #06b6d4;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .info-item {
+        color: #94a3b8;
+        font-size: 0.9rem;
+
+        i {
+            color: #06b6d4;
+            margin-left: 8px;
+            font-size: 0.8rem;
+        }
+    }
+}
+
+.actions-group {
+    display: flex;
+    gap: 1.2rem;
+    /* הגדלתי מ-0.8 כדי שיהיה מרווח יפה יותר בין הכפתורים */
+    justify-content: center;
+
+    .action-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 255, 0.03);
+        color: #94a3b8;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        /* מבטיח שהאייקון יהיה בדיוק במרכז */
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            transform: translateY(-3px);
+            color: white;
+            border-color: transparent;
+        }
+
+        &.gift:hover {
+            background: #a855f7;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+
+        &.edit:hover {
+            background: #06b6d4;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        }
+
+        &.delete:hover {
+            background: #f43f5e;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+        }
+    }
+}

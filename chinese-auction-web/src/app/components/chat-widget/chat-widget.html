@@ -1,0 +1,49 @@
+<div class="chat-wrapper">
+    <div class="chat-trigger" (click)="toggleChat()" [class.hidden]="isOpen">
+        <div class="avatar-circle">
+            <i class="pi pi-android" style="font-size: 1.5rem"></i>
+        </div>
+        <div class="trigger-text">
+            היי! צריך עזרה?
+        </div>
+    </div>
+
+    <div class="chat-window glass-panel" *ngIf="isOpen">
+        
+        <div class="chat-header">
+            <div class="flex align-items-center gap-2">
+                <i class="pi pi-sparkles spin-slow"></i>
+                <span>אלישבע - נציגה וירטואלית</span>
+            </div>
+            <button class="close-btn" (click)="toggleChat()">
+                <i class="pi pi-times"></i>
+            </button>
+        </div>
+
+        <div class="chat-body">
+            <div *ngFor="let msg of messages" 
+                 class="message-bubble" 
+                 [ngClass]="{'user-msg': msg.sender === 'user', 'bot-msg': msg.sender === 'bot'}">
+                {{ msg.text }}
+            </div>
+            
+            <div *ngIf="isLoading" class="typing-indicator">
+                <span>.</span><span>.</span><span>.</span>
+            </div>
+        </div>
+
+        <div class="chat-footer">
+    <input type="text" pInputText 
+           [(ngModel)]="userMessage" 
+           (keydown.enter)="$event.preventDefault(); sendMessage()" 
+           [disabled]="isLoading"
+           placeholder="כתוב הודעה..." />
+    
+    <button pButton icon="pi pi-send" 
+            class="p-button-rounded p-button-text" 
+            (click)="sendMessage()"
+            [disabled]="isLoading || !userMessage.trim()">
+    </button>
+</div>
+    </div>
+</div>

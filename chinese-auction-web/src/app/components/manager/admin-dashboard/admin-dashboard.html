@@ -1,0 +1,71 @@
+<div class="dashboard-wrapper">
+    
+    <div class="dashboard-header">
+        <h1>לוח בקרה <span class="highlight">ראשי</span></h1>
+        <p class="subtitle">סקירה כללית וניהול המערכת</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card revenue-card">
+            <div class="stat-icon"><i class="pi pi-wallet"></i></div>
+            <div class="stat-content">
+                <span class="stat-title">סה"כ הכנסות</span>
+                <span class="stat-value">{{ totalRevenue | currency:'ILS' }}</span>
+            </div>
+        </div>
+
+        <div class="stat-card gifts-card">
+            <div class="stat-icon"><i class="pi pi-gift"></i></div>
+            <div class="stat-content">
+                <span class="stat-title">מתנות פעילות</span>
+                <span class="stat-value">{{ totalGifts }}</span>
+            </div>
+        </div>
+
+        <div class="stat-card donors-card">
+            <div class="stat-icon"><i class="pi pi-users"></i></div>
+            <div class="stat-content">
+                <span class="stat-title">תורמים רשומים</span>
+                <span class="stat-value">{{ totalDonors }}</span>
+            </div>
+        </div>
+
+        <div class="stat-card star-card">
+            <div class="stat-icon"><i class="pi pi-star-fill"></i></div>
+            <div class="stat-content">
+                <span class="stat-title">המתנה היקרה ביותר</span>
+                <span class="stat-value text-sm">{{ topGiftName }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-container">
+        <div class="chart-box glass-panel">
+            <h3>התפלגות מחירי מתנות</h3>
+            <p-chart type="pie" [data]="pieData" [options]="pieOptions" height="300px"></p-chart>
+        </div>
+        <div class="chart-box glass-panel">
+            <h3>מגמת הכנסות</h3>
+            <p-chart type="bar" [data]="barData" [options]="barOptions" height="300px"></p-chart>
+        </div>
+    </div>
+
+    <div class="management-section glass-panel mt-5">
+        <p-tabs styleClass="dashboard-tabs">
+            
+            <p-tabs header="ניהול מתנות" leftIcon="pi pi-gift">
+                <app-gift-gallery></app-gift-gallery>
+            </p-tabs>
+
+            <p-tabs header="ניהול תורמים" leftIcon="pi pi-user-plus">
+                <app-management-donor></app-management-donor>
+            </p-tabs>
+
+            <p-tabs header="ניהול רוכשים" leftIcon="pi pi-shopping-cart">
+                <app-manager-users></app-manager-users>
+            </p-tabs>
+
+        </p-tabs>
+    </div>
+
+</div>

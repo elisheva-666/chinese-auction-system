@@ -1,0 +1,148 @@
+<div class="page-container animate-fade-up" dir="rtl">
+    <header class="page-header">
+        <div class="title-group">
+            <h1 class="page-title">ניהול <span class="highlight">מתנות</span></h1>
+            <p class="subtitle">צפייה וניהול קטלוג המתנות והגרלות</p>
+        </div>
+        <p-button label="הוספת מתנה חדשה" icon="pi pi-plus" (click)="onAdd()" class="cta-gradient-btn"></p-button>
+    </header>
+
+    <div class="table-card">
+        <p-table [value]="listOfGifts" [rows]="10" [paginator]="true" styleClass="custom-premium-table">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 80px">מזהה</th>
+                    <th>תמונה</th>
+                    <th>שם המתנה</th>
+                    <th>מחיר כרטיס</th>
+                    <th>קטגוריה</th>
+                    <th class="text-center">סטטוס מכירות</th>
+                    <th>תורם</th>
+                    <th class="text-center">פעולות</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-gift>
+                <tr class="table-row" [ngClass]="{ 'drawn-row': gift.isDrawn }">
+                    <td><span class="id-badge">#{{gift.id}}</span></td>
+                    <td>
+                        <div class="img-wrapper" [ngClass]="{ 'drawn-image': gift.isDrawn }">
+                            <img
+                                [src]="gift.imageUrl?.startsWith('http') ? gift.imageUrl : IMAGE_BASE_URL + gift.imageUrl" />
+                            <div *ngIf="gift.isDrawn" class="drawn-overlay">
+                                <div class="drawn-badge">
+                                    <i class="pi pi-check-circle"></i>
+                                    <span>הוגרל</span>
+                                </div>
+                                <div class="winner-info">{{ gift.winnerName }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="gift-name-cell" [ngClass]="{ 'drawn-text': gift.isDrawn }">{{gift.name}}</td>
+                    <td><span class="price-tag" [ngClass]="{ 'drawn-text': gift.isDrawn }">{{gift.ticketPrice | currency:'ILS'}}</span></td>
+                    <td><span class="category-badge" [ngClass]="{ 'drawn-text': gift.isDrawn }">{{gift.categoryName}}</span></td>
+                    <td class="text-center">
+                        <div class="status-pill" [ngClass]="{ 'drawn-badge-style': gift.isDrawn }">
+                            <i class="pi pi-ticket"></i>
+                            <span class="count">{{gift.purchasersCount || 0}}</span>
+                            <span class="label">נמכרו</span>
+                        </div>
+                    </td>
+                    <td class="donor-name" [ngClass]="{ 'drawn-text': gift.isDrawn }">{{gift.donorName}}</td>
+                    <td>
+                        <div class="actions-group">
+                            <button class="action-btn edit" (click)="onEdit(gift)" pTooltip="עריכה"
+                                tooltipPosition="top" [disabled]="gift.isDrawn">
+                                <i class="pi pi-pencil"></i>
+                            </button>
+                            <button class="action-btn lottery" (click)="lottery(gift.id)" pTooltip="בצע הגרלה"
+                                tooltipPosition="top" [disabled]="gift.isDrawn">
+                                <i class="pi pi-gift"></i>
+                            </button>
+                            <button class="action-btn delete" (click)="delete(gift.id)" pTooltip="מחיקה"
+                                tooltipPosition="top">
+                                <i class="pi pi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [header]="selectedGift ? 'עריכת מתנה' : 'הוספת מתנה חדשה'" [(visible)]="displayDialog"
+    [style]="{width: '45vw'}" [modal]="true" [draggable]="false" [resizable]="false" styleClass="custom-dialog">
+    <app-gift-form [giftToEdit]="selectedGift" [categories]="categories" (save)="onSaveGift($event)"
+        (cancel)="closeDialog()">
+    </app-gift-form>
+</p-dialog>
+
+<!-- דיאלוג תצוגת הזוכה -->
+<p-dialog 
+    [visible]="displayWinnerDialog()" 
+    (onHide)="closeWinnerDialog()"
+    [modal]="true" 
+    [draggable]="false" 
+    [resizable]="false"
+    [style]="{width: '80vw', maxWidth: '600px'}"
+    styleClass="winner-dialog"
+    [closeOnEscape]="false"
+    showHeader="false">
+    
+    <div class="winner-container" dir="rtl" *ngIf="winner()">
+        <!-- רקע אפקט חגיגי -->
+        <div class="confetti-animation"></div>
+        
+        <!-- הכותרת -->
+        <div class="winner-header">
+            <h1 class="winner-title">🎉 מזל טוב! 🎉</h1>
+            <p class="subtitle-text">נמצא הזוכה בהגרלה!</p>
+        </div>
+        
+        <!-- כרטיס הזוכה -->
+        <div class="winner-card">
+            <!-- שם המתנה -->
+            <div class="gift-section">
+                <h2 class="gift-name">{{ winner()?.giftName }}</h2>
+                <p class="gift-label">המתנה שהגרילו</p>
+            </div>
+            
+            <!-- פסק מפריד -->
+            <div class="divider"></div>
+            
+            <!-- פרטי הזוכה -->
+            <div class="winner-details">
+                <div class="detail-item">
+                    <span class="detail-label">🏆 שם הזוכה:</span>
+                    <span class="detail-value">{{ winner()?.winnerName }}</span>
+                </div>
+                
+                <div class="detail-item">
+                    <span class="detail-label">📧 אימייל:</span>
+                    <span class="detail-value winner-email">{{ winner()?.winnerEmail }}</span>
+                </div>
+                
+                <div class="detail-item">
+                    <span class="detail-label">🎟️ כרטיסים שקנה:</span>
+                    <span class="detail-value">{{ winner()?.totalTickets }}</span>
+                </div>
+                
+                <div class="detail-item">
+                    <span class="detail-label">📅 תאריך הגרלה:</span>
+                    <span class="detail-value">{{ winner()?.drawDate | date:'dd/MM/yyyy HH:mm' }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- כפתור סגירה -->
+        <div class="button-container">
+            <p-button 
+                label="סגירה" 
+                icon="pi pi-check" 
+                (click)="closeWinnerDialog()"
+                class="close-btn"
+                styleClass="p-button-success p-button-lg">
+            </p-button>
+        </div>
+    </div>
+</p-dialog>

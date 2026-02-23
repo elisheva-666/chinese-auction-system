@@ -1,0 +1,145 @@
+@use "../../../../styles.scss" as global;
+
+.donor-form-wrapper {
+    padding: 10px;
+    direction: rtl;
+}
+
+.glass-form {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1rem;
+
+    .profile-icon {
+        font-size: 1.5rem;
+        color: #06b6d4;
+        background: rgba(6, 182, 212, 0.1);
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    h3 {
+        margin: 0;
+        font-size: 1.4rem;
+        color: white;
+        font-weight: 700;
+    }
+}
+
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+        font-size: 0.9rem;
+        color: #94a3b8;
+        font-weight: 500;
+        margin-right: 5px;
+    }
+
+    .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .field-icon {
+            position: absolute;
+            right: 1rem;
+            color: #64748b;
+            z-index: 1;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem 2.8rem 0.8rem 1rem !important; // מרווח לאייקון בימין
+            background: rgba(15, 23, 42, 0.6) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 12px;
+            color: white !important;
+            transition: all 0.3s ease;
+
+            &:focus {
+                border-color: #06b6d4 !important;
+                box-shadow: 0 0 15px rgba(6, 182, 212, 0.2) !important;
+                background: rgba(15, 23, 42, 0.8) !important;
+            }
+        }
+    }
+}
+
+.error-text {
+    color: #f87171;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+    button {
+        padding: 0.8rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+    }
+
+    .btn-secondary {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #94a3b8;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #06b6d4, #3b82f6);
+        border: none;
+        color: white;
+        box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+
+        &:hover:not(:disabled) {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+}
+
+.ltr-input {
+    direction: ltr;
+    text-align: right;
+}

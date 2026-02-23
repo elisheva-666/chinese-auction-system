@@ -1,0 +1,409 @@
+@use "../../../../styles.scss" as *;
+
+.catalog-container {
+    padding: 2rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+
+    .catalog-header {
+        text-align: center;
+        margin-bottom: 3.5rem;
+
+        .catalog-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+
+            .highlight {
+                color: var(--neon-cyan);
+                text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            }
+        }
+
+        .catalog-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+    }
+}
+
+.controls-wrapper {
+    margin-bottom: 4rem;
+
+    .search-bar-container {
+        background: rgba(30, 41, 59, 0.4);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 0.8rem 1.5rem;
+        display: flex;
+        flex-direction: row; // תצוגה אופקית
+        align-items: center;
+        gap: 1.2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+        @media (max-width: 992px) {
+            flex-direction: column-reverse; // בטלפון החיפוש יהיה למעלה
+            align-items: stretch;
+        }
+    }
+}
+
+/* 1. החיפוש - מתרחב למקסימום */
+.search-input-group {
+    position: relative;
+    flex: 1; // לוקח את כל המקום הפנוי
+    min-width: 300px;
+
+    input {
+        width: 100% !important;
+        background: rgba(15, 23, 42, 0.6) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        padding: 0.8rem 3rem 0.8rem 1rem !important; // פדינג לימין עבור האייקון
+        border-radius: 12px !important;
+        color: white !important;
+        font-size: 1rem;
+        transition: 0.3s;
+
+        &:focus {
+            border-color: var(--neon-cyan) !important;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2) !important;
+        }
+    }
+
+    .search-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--neon-cyan);
+        font-size: 1.1rem;
+        z-index: 2;
+    }
+}
+
+/* 2. המיון - מצטמצם למינימום */
+.sort-select-wrapper {
+    flex: 0 0 auto; // לא גדל, נשאר לפי התוכן
+    min-width: 180px;
+}
+
+/* 3. כפתורי הפעולה - צמודים לשמאל */
+.action-buttons {
+    display: flex;
+    gap: 0.6rem;
+    flex-shrink: 0; // מונע התכווצות
+
+    ::ng-deep .icon-only-btn {
+        .p-button {
+            width: 45px !important;
+            height: 45px !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: var(--text-muted) !important;
+
+            &:hover {
+                border-color: var(--neon-cyan) !important;
+                color: var(--neon-cyan) !important;
+                background: rgba(6, 182, 212, 0.1) !important;
+            }
+        }
+    }
+}
+
+/* עיצוב רכיבי פריים */
+::ng-deep {
+    .premium-sort-select {
+        .p-select {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px !important;
+            padding: 0 10px !important;
+
+            .p-select-label {
+                padding: 0.8rem 0.5rem !important;
+                flex: 1;
+            }
+        }
+    }
+
+    .p-select-overlay {
+        background: #1e293b !important;
+        border: 1px solid var(--neon-cyan) !important;
+
+        .p-select-option {
+            color: white !important;
+
+            &:hover {
+                background: rgba(6, 182, 212, 0.1) !important;
+            }
+
+            &.p-highlight {
+                background: var(--neon-cyan) !important;
+                color: #0f172a !important;
+            }
+        }
+    }
+}
+
+/* גריד וכרטיסים */
+.gift-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2.5rem;
+}
+
+.gift-premium-card {
+    background: var(--surface-card);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: 0.4s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    &:hover {
+        transform: translateY(-10px);
+        border-color: var(--neon-cyan);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .image-section {
+        position: relative;
+        height: 220px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .price-overlay {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(15, 23, 42, 0.85);
+            padding: 8px 15px;
+            border-radius: 12px;
+            color: var(--neon-cyan);
+            font-weight: 800;
+        }
+    }
+
+    .content-section {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
+        .gift-name {
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .donor-line {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+
+            span {
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+.cart-btn {
+    width: 100%;
+    min-height: 50px;
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    border: none;
+    border-radius: 12px;
+    color: #0f172a;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 5rem;
+
+
+    i {
+        font-size: 4rem;
+        color: var(--neon-cyan);
+        opacity: 0.5;
+    }
+
+    p {
+        font-size: 1.5rem;
+        color: var(--text-muted);
+        margin-top: 1rem;
+    }
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.gift-card-wrapper {
+    animation: fadeInUp 0.6s ease backwards;
+
+    // דירוג הופעה לכרטיסים
+    @for $i from 1 through 20 {
+        &:nth-child(#{$i}) {
+            animation-delay: #{$i * 0.1}s;
+        }
+    }
+}
+
+/* ===== סטיילים למתנות הוגרלו בקטלוג ===== */
+
+.gift-card-wrapper.drawn-card {
+    opacity: 0.85;
+    
+    .gift-premium-card {
+        filter: grayscale(95%) brightness(0.75);
+        
+        &.drawn-gift {
+            background: rgba(107, 114, 128, 0.2) !important;
+        }
+    }
+}
+
+/* תמונה הוגרלה */
+img.drawn-image {
+    opacity: 0.5;
+    filter: grayscale(100%) brightness(0.7);
+}
+
+/* הסתרת מחיר כשהוגרל */
+.price-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* תגית הוגרל */
+.drawn-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 20;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+    padding: 1rem;
+    border-bottom: 2px solid rgba(16, 185, 129, 0.3);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    animation: slideDown 0.4s ease-out;
+    
+    .drawn-label-content {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        
+        i {
+            font-size: 1.5rem;
+            color: white;
+            animation: checkBounce 0.5s ease-out;
+            flex-shrink: 0;
+        }
+        
+        .drawn-text-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            
+            .drawn-title {
+                font-size: 0.85rem;
+                font-weight: 700;
+                color: white;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            
+            .winner-name {
+                font-size: 1rem;
+                font-weight: 900;
+                color: #dcfce7;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes checkBounce {
+    0% {
+        transform: scale(0) rotate(-45deg);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1) rotate(0);
+    }
+}
+
+/* תמונה הוגרלה */
+img.drawn-image {
+    opacity: 0.4;
+    filter: grayscale(80%);
+}
+
+/* הסתרת מחיר כשהוגרל */
+.price-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* טקסט אפור כשהוגרל */
+.gift-name.drawn-text,
+.donor-line.drawn-text {
+    color: #9ca3af !important;
+    opacity: 0.7;
+    
+    span {
+        color: #6b7280 !important;
+        opacity: 0.7;
+    }
+}
+
+.gift-card-wrapper.drawn-card {
+    .gift-name {
+        color: #6b7280 !important;
+        opacity: 0.8;
+    }
+    
+    .donor-line {
+        color: #9ca3af !important;
+        opacity: 0.8;
+    }
+}
+}

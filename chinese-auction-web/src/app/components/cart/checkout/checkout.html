@@ -1,0 +1,110 @@
+<p-toast position="top-center"></p-toast>
+
+<div class="payment-page-container">
+    
+    <div class="cyber-grid-bg"></div>
+
+    <div class="checkout-glass-card">
+        
+        <div class="header-section">
+            <h1 class="neon-title">ביצוע <span class="highlight">תשלום</span></h1>
+            <div class="total-badge">
+                <span>סה"כ לתשלום:</span>
+                <span class="amount">{{ totalAmount }} ₪</span>
+            </div>
+        </div>
+
+        <div class="payment-methods">
+            <button class="method-btn google" [class.active]="selectedMethod === 'google'" (click)="selectMethod('google')">
+                <i class="pi pi-google"></i> Pay
+            </button>
+            <button class="method-btn paypal" [class.active]="selectedMethod === 'paypal'" (click)="selectMethod('paypal')">
+                <i class="pi pi-paypal"></i> PayPal
+            </button>
+            <button class="method-btn credit" [class.active]="selectedMethod === 'credit'" (click)="selectMethod('credit')">
+                <i class="pi pi-credit-card"></i> אשראי
+            </button>
+        </div>
+
+        @if (selectedMethod === 'credit') {
+        <div class="credit-card-section">
+            
+            <form [formGroup]="paymentForm" class="card-form">
+                
+                <div class="form-field full-width">
+                    <label>בעל הכרטיס</label>
+                    <div class="input-glow">
+                        <i class="pi pi-user icon"></i>
+                        <input pInputText formControlName="cardHolder" placeholder="ISRAEL ISRAELI" />
+                    </div>
+                </div>
+
+                <div class="form-field full-width">
+                    <label>מספר כרטיס</label>
+                    <div class="input-glow">
+                        <i class="pi pi-credit-card icon"></i>
+                        <input pInputText formControlName="cardNumber" maxlength="16" placeholder="0000 0000 0000 0000" class="ltr-input" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-field">
+                        <label>תוקף</label>
+                        <div class="input-glow">
+                            <i class="pi pi-calendar icon"></i>
+                            <input pInputText formControlName="expiry" placeholder="MM/YY" maxlength="5" class="ltr-input"/>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label>CVV</label>
+                        <div class="input-glow">
+                            <i class="pi pi-lock icon"></i>
+                            <input pInputText type="password" formControlName="cvv" maxlength="3" placeholder="123" class="ltr-input"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="visual-card-wrapper">
+                <div class="visual-card">
+                    <div class="card-chip"></div>
+                    <div class="card-logo">VISA</div>
+                    <div class="card-number">{{ formatCardNumber() || '•••• •••• •••• ••••' }}</div>
+                    <div class="card-details">
+                        <div class="holder">
+                            <span>Card Holder</span>
+                            <div>{{ paymentForm.get('cardHolder')?.value || 'YOUR NAME' | uppercase }}</div>
+                        </div>
+                        <div class="expires">
+                            <span>Expires</span>
+                            <div>{{ paymentForm.get('expiry')?.value || 'MM/YY' }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        } 
+        
+        @else {
+            <div class="wallet-message">
+                <i class="pi" [class.pi-google]="selectedMethod === 'google'" [class.pi-paypal]="selectedMethod === 'paypal'" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                <p>אתה מועבר ל-{{ selectedMethod | titlecase }} לביצוע תשלום מאובטח...</p>
+                <small>(זהו פרויקט לימודי, לחיצה על "שלם" תאשר את העסקה מיד)</small>
+            </div>
+        }
+
+        <div class="footer-action">
+            <button pButton 
+                    [label]="isLoading ? 'מעבד תשלום...' : 'שלם עכשיו ' + totalAmount + ' ₪'" 
+                    class="pay-now-btn" 
+                    (click)="processPayment()"
+                    [disabled]="isLoading">
+                @if(isLoading) {
+                    <p-progressSpinner styleClass="w-2rem h-2rem mr-2" strokeWidth="4"></p-progressSpinner>
+                }
+            </button>
+        </div>
+
+    </div>
+</div>

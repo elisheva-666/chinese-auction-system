@@ -1,0 +1,174 @@
+// ייבוא משתנים (אם יש לך קובץ גלובלי)
+$neon-cyan: #06b6d4;
+$dark-bg: #0f172a;
+$text-color: #e2e8f0;
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    color: $text-color;
+    direction: rtl;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    text-align: center;
+    margin-bottom: 5rem;
+
+    .main-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        
+        .highlight {
+            color: $neon-cyan;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        }
+    }
+
+    .subtitle {
+        font-size: 1.4rem;
+        color: #94a3b8;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+}
+
+/* --- Video Section (Glass Card) --- */
+.video-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    
+    background: rgba(30, 41, 59, 0.4); // אפקט זכוכית
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 2rem;
+    margin-bottom: 6rem;
+
+    .video-wrapper {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    }
+
+    .video-text {
+        h2 {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            border-right: 4px solid $neon-cyan;
+            padding-right: 15px;
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #cbd5e1;
+        }
+    }
+}
+
+/* --- Content Rows (Text + Image) --- */
+.content-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-bottom: 6rem;
+
+    // הופך את הסדר בשורות זוגיות
+    &.reverse {
+        direction: ltr; // טריק להפוך סדר גריד
+        .text-col { direction: rtl; } // מחזיר טקסט לימין
+    }
+
+    .text-col {
+        padding: 1rem;
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            
+            &.warning { background: rgba(234, 179, 8, 0.15); color: #eab308; }
+            &.success { background: rgba(236, 72, 153, 0.15); color: #ec4899; }
+            &.tech { background: rgba(6, 182, 212, 0.15); color: $neon-cyan; }
+        }
+
+        h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+        }
+    }
+
+    .image-col {
+        .rounded-img {
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.4s ease;
+
+            &:hover {
+                transform: scale(1.02);
+            }
+        }
+    }
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    .video-section, .content-row {
+        grid-template-columns: 1fr; // טור אחד במובייל
+        gap: 2rem;
+    }
+    
+    .content-row.reverse {
+        direction: rtl; // ביטול ההיפוך במובייל
+    }
+
+    .hero-section .main-title {
+        font-size: 2.5rem;
+    }
+}
+
+/* --- כפתור הנעה לפעולה --- */
+::ng-deep .cta-btn {
+    .p-button {
+        background: linear-gradient(135deg, #0ea5e9, $neon-cyan) !important;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+        
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.6);
+        }
+    }
+}

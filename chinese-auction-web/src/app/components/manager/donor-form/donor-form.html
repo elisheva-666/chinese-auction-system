@@ -1,0 +1,54 @@
+<div class="donor-form-wrapper animate-fade-up">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="glass-form">
+
+        <div class="form-header">
+            <i class="pi pi-user-plus profile-icon"></i>
+            <h3>פרטי התורם</h3>
+        </div>
+
+        <div class="form-grid">
+            <div class="input-group">
+                <label for="name">שם מלא</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-user field-icon"></i>
+                    <input pInputText id="name" formControlName="name" placeholder="ישראל ישראלי" />
+                </div>
+                <small class="error-text" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+                    שם תקין הוא שדה חובה
+                </small>
+            </div>
+
+            <div class="input-group">
+                <label for="email">דואר אלקטרוני</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-envelope field-icon"></i>
+                    <input pInputText id="email" formControlName="email" placeholder="example@mail.com"
+                        class="ltr-input" />
+                </div>
+                <small class="error-text" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+                    כתובת אימייל לא תקינה
+                </small>
+            </div>
+
+            <div class="input-group">
+                <label for="phone">טלפון</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-phone field-icon"></i>
+                    <input pInputText id="phone" formControlName="phone" placeholder="050-0000000" class="ltr-input" />
+                </div>
+                <small class="error-text" *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid">
+                    מספר טלפון לא תקין
+                </small>
+            </div>
+        </div>
+
+        <div class="form-footer">
+            <button type="button" class="btn-secondary" (click)="cancel.emit()">
+                <i class="pi pi-times"></i> ביטול
+            </button>
+            <button type="submit" class="btn-primary" [disabled]="form.invalid">
+                <i class="pi pi-save"></i> שמירת תורם
+            </button>
+        </div>
+    </form>
+</div>

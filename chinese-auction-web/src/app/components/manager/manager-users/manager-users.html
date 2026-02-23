@@ -1,0 +1,84 @@
+<div class="page-container animate-fade-up" dir="rtl">
+    <h1 class="page-title">ניהול <span class="highlight">רוכשים</span></h1>
+
+    <div class="controls-container">
+        <div class="controls-glass-card">
+
+            <div class="search-section">
+                <div class="input-glow-wrapper">
+                    <i class="pi pi-search"></i>
+                    <input type="text" pInputText placeholder="חפש לפי שם או מזהה לקוח..." [(ngModel)]="searchTerm"
+                        (keyup)="filterCustomers()" />
+                </div>
+            </div>
+
+            <div class="actions-section">
+                <p-button icon="pi pi-refresh" (click)="loadData()" [text]="true" class="reset-btn"
+                    pTooltip="רענן נתונים" tooltipPosition="top">
+                </p-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <p-table [value]="filteredCustomers" [rows]="10" [paginator]="true" class="custom-premium-table">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>מזהה לקוח</th>
+                    <th>שם לקוח</th>
+                    <th class="text-center">מס' הזמנות</th>
+                    <th class="text-center">סה"כ כרטיסים</th>
+                    <th>סה"כ שולם</th>
+                    <th class="text-center">פעולות</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customer>
+                <tr>
+                    <td><span class="user-id-badge">#{{customer.userId}}</span></td>
+                    <td style="font-weight: 700;">{{customer.userName}}</td>
+                    <td class="text-center"><span class="orders-count">{{customer.ordersCount}}</span></td>
+                    <td class="text-center">{{customer.totalItems}}</td>
+                    <td><span class="price-text">{{customer.totalSpent | currency:'ILS'}}</span></td>
+                    <td class="text-center">
+                        <button class="action-btn" (click)="viewCustomerDetails(customer)"
+                            pTooltip="צפייה בפירוט הזמנות" tooltipPosition="top">
+                            <i class="pi pi-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [header]="'פירוט רכישות - ' + (selectedCustomer?.userName)" [(visible)]="displayDialog"
+    [style]="{width: '50vw'}" [modal]="true" styleClass="custom-dialog">
+
+    @if (selectedCustomer) {
+    <div class="dialog-inner-content">
+        <p-table [value]="selectedCustomer.allItems" class="custom-premium-table">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>שם המתנה</th>
+                    <th>מחיר יחידה</th>
+                    <th class="text-center">כמות</th>
+                    <th>סה"כ</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td>{{item.giftName}}</td>
+                    <td>{{item.unitPrice | currency:'ILS'}}</td>
+                    <td class="text-center">{{item.quantity}}</td>
+                    <td class="price-text">{{(item.unitPrice * item.quantity) | currency:'ILS'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    }
+
+    <ng-template pTemplate="footer">
+        <p-button label="סגור" icon="pi pi-times" (click)="displayDialog = false"
+            styleClass="p-button-text text-white"></p-button>
+    </ng-template>
+</p-dialog>

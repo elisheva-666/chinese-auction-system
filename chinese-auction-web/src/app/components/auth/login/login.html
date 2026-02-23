@@ -1,0 +1,38 @@
+<div class="auth-container">
+    <div class="auth-header">
+        <i class="pi pi-user-plus tech-icon"></i>
+        <h2>כניסה למערכת</h2>
+        <p>התחברי כדי להמשיך ברכישה</p>
+    </div>
+
+    <form #loginForm="ngForm" (ngSubmit)="onLogin()" class="auth-form">
+
+        <div class="input-field-group">
+            <label>דואר אלקטרוני</label>
+            <p-iconfield iconPosition="right">
+                <input pInputText type="email" name="email" [(ngModel)]="credentials.email" placeholder="הזינו מייל..."
+                    required />
+                <p-inputicon class="pi pi-envelope"></p-inputicon>
+            </p-iconfield>
+        </div>
+
+        <div class="input-field-group">
+            <label>סיסמה</label>
+            <p-iconfield iconPosition="right">
+                <p-password name="password" [(ngModel)]="credentials.password" [toggleMask]="true" [feedback]="false"
+                    placeholder="הזינו סיסמה..." required styleClass="w-full">
+                </p-password>
+                <p-inputicon class="pi pi-lock"></p-inputicon>
+            </p-iconfield>
+        </div>
+
+        <p-button label="התחברות" icon="pi pi-sign-in" type="submit" [loading]="isLoading()"
+            [disabled]="!loginForm.valid" class="submit-button">
+        </p-button>
+
+        <div class="auth-footer" style="text-align: center; margin-top: 1rem;">
+            <span style="color: var(--text-muted);">עדיין לא רשום?</span>
+            <p-button label="ליצירת חשבון חדש" [text]="true" (onClick)="switchToRegister.emit()"></p-button>
+        </div>
+    </form>
+</div>

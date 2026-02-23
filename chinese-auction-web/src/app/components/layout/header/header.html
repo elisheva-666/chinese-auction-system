@@ -1,0 +1,82 @@
+<div class="raffle-timer-bar">
+    <div class="timer-label">סגירת המכירה להגרלה בעוד:</div>
+    <div class="timer-digits">
+        <div class="time-unit">
+            <span class="number">{{ countdown.days }}</span>
+            <span class="label">ימים</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="time-unit">
+            <span class="number">{{ countdown.hours | number:'2.0' }}</span>
+            <span class="label">שעות</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="time-unit">
+            <span class="number">{{ countdown.minutes | number:'2.0' }}</span>
+            <span class="label">דקות</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="time-unit">
+            <span class="number">{{ countdown.seconds | number:'2.0' }}</span>
+            <span class="label">שניות</span>
+        </div>
+    </div>
+</div>
+
+<header class="navbar">
+
+    <div class="actions">
+        @if (!isLoggedIn()) {
+        <a (click)="openLogin()" class="login-link" style="cursor: pointer;">LOGIN</a>
+        <a (click)="openRegister()" class="login-link" style="cursor: pointer;">REGISTER</a>
+        } @else {
+        <a (click)="logout()" class="login-link" style="cursor: pointer;"><i class="pi pi-sign-out"></i></a>
+        }
+        <div class="cart-glow-wrapper" (click)="cartService.isCartVisible.set(true)">
+            <div class="cart-container">
+                <i class="pi pi-shopping-cart cart-icon"></i>
+                @if(cartService.totalItemsCount() > 0) {
+                <span class="neon-badge">{{ cartService.totalItemsCount() }}</span>
+                }
+            </div>
+        </div>
+
+        <p-drawer [visible]="isAuthVisible()" (visibleChange)="isAuthVisible.set($event)" position="right"
+            [style]="{width: '450px', background: '#0f172a'}">
+
+            <div class="auth-container" style="padding: 10px;">
+                @if (authMode() === 'login') {
+                <app-login (onSuccess)="isAuthVisible.set(false)"
+                    (switchToRegister)="authMode.set('register')"></app-login>
+                } @else {
+                <app-register (onSuccess)="isAuthVisible.set(false)"
+                    (switchToLogin)="authMode.set('login')"></app-register>
+                }
+            </div>
+        </p-drawer>
+    </div>
+
+    <nav class="nav-links">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">HOME</a>
+        <a routerLink="/about" routerLinkActive="active">ABOUT</a>
+        <a routerLink="/catalog" routerLinkActive="active">CATALOG</a>
+
+        @if (isAdmin()) {
+        <div class="dropdown">
+            <a class="dropdown-trigger" routerLink="/manager" routerLinkActive="active">MANAGER</a>
+            <div class="dropdown-content">
+                <a routerLink="/manager/gifts">ניהול</a>
+                <a routerLink="/manager/donors">ניהול מתנות</a>
+                <a routerLink="/manager/raffle">ניהול תורמים</a>
+                <a routerLink="/manager/reports">ניהול משתמשים</a>
+            </div>
+        </div>
+        }
+    </nav>
+
+    <div class="logo-container" routerLink="/">
+        <i class="pi pi-box logo-icon"></i>
+        <span class="brand-name">MAGDALOR <span class="highlight">TECH</span></span>
+    </div>
+
+</header>

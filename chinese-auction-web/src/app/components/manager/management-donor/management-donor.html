@@ -1,0 +1,87 @@
+<div class="page-container animate-fade-up" dir="rtl">
+    <header class="page-header">
+        <div class="title-group">
+            <h1 class="page-title">ניהול <span class="highlight">תורמים</span></h1>
+            <p class="subtitle">מעקב אחר תורמי המכירה הסינית והמתנות המשויכות</p>
+        </div>
+        <p-button label="תורם חדש" icon="pi pi-user-plus" (click)="openNew()" class="cta-gradient-btn"></p-button>
+    </header>
+
+    <div class="search-section">
+        <div class="search-grid">
+            <div class="search-field">
+                <i class="pi pi-search"></i>
+                <input type="text" pInputText placeholder="חיפוש לפי שם..." [(ngModel)]="searchName"
+                    (keyup.enter)="performSearch()">
+            </div>
+
+            <div class="search-field">
+                <i class="pi pi-envelope"></i>
+                <input type="text" pInputText placeholder="חיפוש לפי אימייל..." [(ngModel)]="searchEmail"
+                    (keyup.enter)="performSearch()">
+            </div>
+
+            <div class="search-actions">
+                <button class="filter-btn" (click)="performSearch()" pTooltip="בצע סינון" tooltipPosition="top">
+                    <i class="pi pi-filter"></i>
+                </button>
+                <button class="reset-btn" (click)="clearSearch()" pTooltip="איפוס חיפוש" tooltipPosition="top">
+                    <i class="pi pi-refresh"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <p-table [value]="listOfDonors" [rows]="8" [paginator]="true" class="custom-premium-table">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>מזהה</th>
+                    <th>שם התורם</th>
+                    <th>פרטי התקשרות</th>
+                    <th class="text-center">פעולות ניהול</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-donor>
+                <tr>
+                    <td><span class="id-badge">#{{donor.id}}</span></td>
+                    <td class="donor-name-cell">{{donor.name}}</td>
+                    <td>
+                        <div class="contact-info">
+                            <span class="info-item"><i class="pi pi-envelope"></i> {{donor.email}}</span>
+                            <span class="info-item"><i class="pi pi-phone"></i> {{donor.phone}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="actions-group">
+                            <button class="action-btn gift" (click)="openGiftDialog(donor)" pTooltip="הוספת מתנה"
+                                tooltipPosition="top">
+                                <i class="pi pi-gift"></i>
+                            </button>
+                            <button class="action-btn edit" (click)="onEdit(donor)" pTooltip="עריכת פרטים"
+                                tooltipPosition="top">
+                                <i class="pi pi-pencil"></i>
+                            </button>
+                            <button class="action-btn delete" (click)="delete(donor.id)" pTooltip="מחיקה מהמערכת"
+                                tooltipPosition="top">
+                                <i class="pi pi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [header]="selectedDonor ? 'עריכת תורם' : 'הוספת תורם חדש'" [(visible)]="displayDialog"
+    [style]="{width: '35vw'}" [modal]="true" styleClass="custom-dialog">
+    <app-donor-form [donorToEdit]="selectedDonor" (save)="saveDonor($event)" (cancel)="displayDialog = false">
+    </app-donor-form>
+</p-dialog>
+
+<p-dialog header="הוספת מתנה לתורם" [(visible)]="displayGiftDialog" [style]="{width: '50vw'}" [modal]="true"
+    styleClass="custom-dialog">
+    <app-gift-form [categories]="categories" (save)="addGiftToDonor($event)" (cancel)="displayGiftDialog = false">
+    </app-gift-form>
+</p-dialog>
