@@ -9,112 +9,148 @@ namespace ChineseAuction.Api.Services
     {
         private readonly IGiftRepository _repo;
         private readonly IMapper _mapper;
+        private readonly ICacheService _cache;
+        private readonly TimeSpan _ttl;
 
-        public GiftService(IGiftRepository repo, IMapper mapper)
+        // Cache key constants
+        private const string KeyAll = "gifts:all";
+        private const string KeyAdmin = "gifts:admin";
+        private const string KeyByPriceAsc = "gifts:price:asc";
+        private const string KeyByPriceDesc = "gifts:price:desc";
+        private const string KeyByCategory = "gifts:category";
+        private static string KeyById(int id) => $"gifts:{id}";
+
+        // All keys that must be cleared when any gift changes
+        private static readonly string[] AllGiftKeys =
+        [
+            KeyAll, KeyAdmin, KeyByPriceAsc, KeyByPriceDesc, KeyByCategory
+        ];
+
+        public GiftService(IGiftRepository repo, IMapper mapper, ICacheService cache, IConfiguration config)
         {
             _repo = repo;
             _mapper = mapper;
+            _cache = cache;
+            var ttlMinutes = config.GetValue<int>("Redis:CacheTtlMinutes:Gifts", 10);
+            _ttl = TimeSpan.FromMinutes(ttlMinutes);
         }
 
-        /// <summary>שליפת כל המתנות לרוכשים (מידע מפורט )</summary>
         public async Task<IEnumerable<GiftDetailDto>> GetAllForBuyersAsync()
         {
+            var cached = await _cache.GetAsync<IEnumerable<GiftDetailDto>>(KeyAll);
+            if (cached is not null) return cached;
+
             var gifts = await _repo.GetAllAsync();
-            return _mapper.Map<IEnumerable<GiftDetailDto>>(gifts);
+            var result = _mapper.Map<IEnumerable<GiftDetailDto>>(gifts);
+            await _cache.SetAsync(KeyAll, result, _ttl);
+            return result;
         }
 
-        /// <summary>מיון מתנות לפי מחיר כרטיס</summary>
         public async Task<IEnumerable<GiftDetailDto>> GetAllSortedByPriceAsync(bool ascending)
         {
+            var key = ascending ? KeyByPriceAsc : KeyByPriceDesc;
+            var cached = await _cache.GetAsync<IEnumerable<GiftDetailDto>>(key);
+            if (cached is not null) return cached;
+
             var gifts = await _repo.GetAllSortedByPriceAsync(ascending);
-            return _mapper.Map<IEnumerable<GiftDetailDto>>(gifts);
+            var result = _mapper.Map<IEnumerable<GiftDetailDto>>(gifts);
+            await _cache.SetAsync(key, result, _ttl);
+            return result;
         }
 
-        /// <summary>מיון מתנות לפי שם הקטגוריה</summary>
         public async Task<IEnumerable<GiftDetailDto>> GetAllSortedByCategoryAsync()
         {
+            var cached = await _cache.GetAsync<IEnumerable<GiftDetailDto>>(KeyByCategory);
+            if (cached is not null) return cached;
+
             var gifts = await _repo.GetAllSortedByCategoryAsync();
-            return _mapper.Map<IEnumerable<GiftDetailDto>>(gifts);
+            var result = _mapper.Map<IEnumerable<GiftDetailDto>>(gifts);
+            await _cache.SetAsync(KeyByCategory, result, _ttl);
+            return result;
         }
 
-        /// <summary>צפייה מנהלית מורחבת כולל נתוני מכירות ותורמים</summary>
         public async Task<IEnumerable<GiftAdminDto>> GetAllForAdminAsync()
         {
+            var cached = await _cache.GetAsync<IEnumerable<GiftAdminDto>>(KeyAdmin);
+            if (cached is not null) return cached;
+
             var gifts = await _repo.GetAllAsync();
-            return _mapper.Map<IEnumerable<GiftAdminDto>>(gifts);
+            var result = _mapper.Map<IEnumerable<GiftAdminDto>>(gifts);
+            await _cache.SetAsync(KeyAdmin, result, _ttl);
+            return result;
         }
 
-        /// <summary>שליפת פרטי מתנה מלאים לפי מזהה</summary>
         public async Task<GiftDetailDto?> GetByIdAsync(int id)
         {
+            var key = KeyById(id);
+            var cached = await _cache.GetAsync<GiftDetailDto>(key);
+            if (cached is not null) return cached;
+
             var gift = await _repo.GetByIdAsync(id);
-            return _mapper.Map<GiftDetailDto>(gift);
+            var result = _mapper.Map<GiftDetailDto>(gift);
+            if (result is not null)
+                await _cache.SetAsync(key, result, _ttl);
+            return result;
         }
 
-        /// <summary>חיפוש דינמי במתנות לפי שם, תורם או מינימום רכישות</summary>
+        // Search is not cached ג€” dynamic query with many combinations
         public async Task<IEnumerable<GiftDto>> SearchAsync(string? name, string? donor, int? minPurchasers)
         {
             var gifts = await _repo.SearchGiftsInternalAsync(name, donor, minPurchasers);
             return _mapper.Map<IEnumerable<GiftDto>>(gifts);
         }
 
-        ///// <summary>יצירת מתנה חדשה</summary>
-        //public async Task<int> CreateAsync(GiftCreateUpdateDto dto)
-        //{
-        //    var gift = _mapper.Map<Gift>(dto);
-        //    return await _repo.CreateAsync(gift);
-        //}
-
-        /// <summary>יצירת מתנה חדשה לתורם קיים</summary>
         public async Task<int> AddToDonorAsync(int donorId, GiftCreateUpdateDto dto, string? imagePath)
         {
-
             if (!await _repo.DonorExistsAsync(donorId))
-                throw new KeyNotFoundException("התורם המבוקש לא נמצא במערכת");
+                throw new KeyNotFoundException("׳”׳“׳•׳ ׳•׳¨ ׳”׳׳‘׳•׳§׳© ׳׳ ׳ ׳׳¦׳ ׳‘׳׳¢׳¨׳›׳×");
 
             var gift = _mapper.Map<Gift>(dto);
-
             gift.DonorId = donorId;
-            gift.ImageUrl = imagePath; // השמת הנתיב שנשמר ב-wwwroot
-
-            // פתרון שגיאת Identity: משתמשים ב-ID בלבד ולא באובייקט מלא
+            gift.ImageUrl = imagePath;
             gift.CategoryId = (int)dto.CategoryId;
             gift.Category = null;
 
-            return await _repo.CreateAsync(gift);
+            var id = await _repo.CreateAsync(gift);
+            await InvalidateAllGiftCacheAsync();
+            return id;
         }
 
-        /// <summary>עדכון פרטי מתנה קיימת כולל תמונה</summary>
         public async Task<bool> UpdateAsync(int id, GiftCreateUpdateDto dto, string? imagePath)
         {
-            //  שליפת המתנה הקיימת מהמסד
             var existing = await _repo.GetByIdTrackedAsync(id);
             if (existing == null) return false;
 
-            //. מיפוי אוטומטי של שדות פשוטים (Name, TicketPrice, Description)
-            // ה-Mapper ידלג על ImageUrl ו-Category כי הגדרנו לו Ignore ב-Profile
             _mapper.Map(dto, existing);
 
-            // עדכון ה-ID של הקטגוריה וניתוק האובייקט (למניעת שגיאת Identity)
             if (dto.CategoryId.HasValue)
             {
                 existing.CategoryId = dto.CategoryId.Value;
                 existing.Category = null;
             }
 
-            // עדכון התמונה - רק אם הועלתה תמונה חדשה
             if (!string.IsNullOrEmpty(imagePath))
-            {
                 existing.ImageUrl = imagePath;
-            }
 
-            // שמירה
             await _repo.SaveChangesAsync();
+            await InvalidateAllGiftCacheAsync(id);
             return true;
         }
 
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var deleted = await _repo.DeleteAsync(id);
+            if (deleted)
+                await InvalidateAllGiftCacheAsync(id);
+            return deleted;
+        }
 
-        /// <summary>מחיקת מתנה מהמערכת</summary>
-        public async Task<bool> DeleteAsync(int id) => await _repo.DeleteAsync(id);
+        private async Task InvalidateAllGiftCacheAsync(int? specificId = null)
+        {
+            var keys = specificId.HasValue
+                ? [.. AllGiftKeys, KeyById(specificId.Value)]
+                : AllGiftKeys;
+            await _cache.RemoveAsync(keys);
+        }
     }
 }

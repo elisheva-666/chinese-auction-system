@@ -9,11 +9,6 @@
 
 
 
-        public static IApplicationBuilder UseRateLimiting(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<RateLimitingMiddleware>();
-        }
-
         public static IApplicationBuilder UseExceptionHandling(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<ExceptionMiddleware>();

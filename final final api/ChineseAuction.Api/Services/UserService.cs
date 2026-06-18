@@ -40,8 +40,8 @@ namespace ChineseAuction.Api.Services
             return user == null ? null : _mapper.Map<UserResponseDto>(user);
         }
 
-        // יצירת משתמש חדש
-        public async Task<UserResponseDto> CreateUserAsync(UserCreateDto createDto)
+        // יצירת משתמש חדש — מחזיר token כמו login
+        public async Task<LoginResponseDto> CreateUserAsync(UserCreateDto createDto)
         {
             if (await _userRepository.EmailExistsAsync(createDto.Email))
                 throw new ArgumentException($"Email {createDto.Email} is already registered.");
@@ -51,7 +51,16 @@ namespace ChineseAuction.Api.Services
 
             var createdUser = await _userRepository.CreateAsync(user);
 
-            return _mapper.Map<UserResponseDto>(createdUser);
+            var token = _tokenService.GenerateToken(createdUser.Id, createdUser.Email, createdUser.Name, createdUser.Role);
+            var expiryMinutes = _configuration.GetValue<int>("Jwt:ExpiryMinutes", 60);
+
+            return new LoginResponseDto
+            {
+                Token = token,
+                TokenType = "Bearer",
+                ExpiresIn = expiryMinutes * 60,
+                User = _mapper.Map<UserResponseDto>(createdUser)
+            };
         }
 
 
