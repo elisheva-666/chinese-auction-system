@@ -68,7 +68,7 @@
 `git clone https://github.com/elisheva-666/chinese-auction-system.git`
 
 **2. הגדרת צד שרת (API):**
-* נווט לתיקיית `final-final-api`.
+* נווט לתיקיית `chinese-auction-api`.
 * עדכן את ה-`ConnectionString` ב-`appsettings.json`.
 * הרץ את הפקודה: `dotnet run`.
 

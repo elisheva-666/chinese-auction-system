@@ -4,7 +4,7 @@ applyTo: "**/Controllers/**"
 
 # Controllers — Chinese Auction System
 
-This file is loaded when working on controller code. Controllers are in `final final api/ChineseAuction.Api/Controllers/`.
+This file is loaded when working on controller code. Controllers are in `chinese-auction-api/ChineseAuction.Api/Controllers/`.
 
 All controllers follow the same pattern:
 - `[ApiController]` + `[Route("api/[controller]")]`

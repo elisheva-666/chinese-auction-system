@@ -24,10 +24,10 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore NuGet packages
-        run: dotnet restore "final final api/ChineseAuction.Api/ChineseAuction.Api.csproj"
+        run: dotnet restore "chinese-auction-api/ChineseAuction.Api/ChineseAuction.Api.csproj"
 
       - name: Build (Release)
-        run: dotnet build "final final api/ChineseAuction.Api/ChineseAuction.Api.csproj" --no-restore -c Release
+        run: dotnet build "chinese-auction-api/ChineseAuction.Api/ChineseAuction.Api.csproj" --no-restore -c Release
 
   # ────────────────────────────────────────────────
   # Job 2: Build the Angular 20 frontend

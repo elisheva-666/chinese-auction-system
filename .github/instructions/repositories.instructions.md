@@ -4,7 +4,7 @@ applyTo: "**/Repositories/**"
 
 # Repositories — Chinese Auction System
 
-This file is loaded when working on repository code. Repositories are in `final final api/ChineseAuction.Api/Repositories/`.
+This file is loaded when working on repository code. Repositories are in `chinese-auction-api/ChineseAuction.Api/Repositories/`.
 
 Each repository has an **interface** (e.g. `IGiftRepository`) and an **implementation** (e.g. `GiftRepository`). All implementations inject `AppDbContext` and use EF Core for data access. All methods are `async`.
 

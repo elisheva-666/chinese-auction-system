@@ -40,7 +40,7 @@ chinese-auction-system/
 │       ├── app.routes.ts
 │       └── app.config.ts
 │
-└── final final api/                   ← ASP.NET Core 8 backend
+└── chinese-auction-api/                   ← ASP.NET Core 8 backend
     └── ChineseAuction.Api/
         ├── Controllers/   (8 REST controllers)
         ├── Services/      (19 service classes)

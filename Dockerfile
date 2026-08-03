@@ -3,11 +3,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy the project file first and restore (layer is cached unless csproj changes)
-COPY ["final final api/ChineseAuction.Api/ChineseAuction.Api.csproj", "ChineseAuction.Api/"]
+COPY ["chinese-auction-api/ChineseAuction.Api/ChineseAuction.Api.csproj", "ChineseAuction.Api/"]
 RUN dotnet restore "ChineseAuction.Api/ChineseAuction.Api.csproj"
 
 # Copy the rest of the source and publish
-COPY "final final api/ChineseAuction.Api/" "ChineseAuction.Api/"
+COPY "chinese-auction-api/ChineseAuction.Api/" "ChineseAuction.Api/"
 WORKDIR "/src/ChineseAuction.Api"
 RUN dotnet publish "ChineseAuction.Api.csproj" -c Release -o /app/publish --no-restore
 
